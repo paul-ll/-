@@ -1,0 +1,132 @@
+   <view class="fd-hd">
+	    <image class="event_img" src="{{eventInfo.event.image}}" ></image>
+	    <view class="fd-intro">
+	      <view class="fd-title">{{eventInfo.event.name}}</view>
+	      	<block wx:for="{{eventInfo.event_tag}}" wx:for-item="eventTag" wx:key="event" wx:for-index="index">
+	         <view class="fd-time-data" data-tag_id="{{eventTag.tag_id}}">
+	            {{eventTag.name}}
+	         </view>
+	         </block>
+	       	<block wx:if="{{eventInfo.ticket_interval.type == 1}}">
+		        <view class="fd-address-add">
+	            	免费
+	        	</view>
+		    </block>
+		    <block wx:elif="{{eventInfo.ticket_interval.type == 2}}">
+		        <view class="fd-address-add">
+		            {{eventInfo.ticket_interval.start_ticket}}
+		        </view>
+	        </block>
+	        <block wx:elif="{{eventInfo.ticket_interval.type == 3}}">
+		        <view class="fd-address-add">
+		           	{{eventInfo.ticket_interval.start_ticket}}~{{eventInfo.ticket_interval.end_ticket}}
+		        </view>
+	        </block>
+	        <block wx:elif="{{eventInfo.ticket_interval.type == 4}}">
+		        <view class="fd-address-add">
+		            {{eventInfo.ticket_interval.current_price}}
+		        </view>
+	        </block>
+	     </view>
+	</view>
+
+	<view class="info_list">
+		<view class="info_ul_list">
+			<view class="info_ul_li">
+				<view class="info_list_left">
+					<view class="info_list_span"></view>
+				</view>
+				<view class="info_list_right">
+					<view>{{eventInfo.event.start_date}} {{eventInfo.event.week}} </view>
+					<view>{{eventInfo.event.start_time}}~{{eventInfo.event.end_time}}</view>
+				</view>
+			</view>
+			<view class="info_ul_li">
+				<view class="info_list_left">
+					<view class="info_list_span"></view>
+				</view>
+				<view class="info_list_right">
+					<view class="info_list_p">{{eventInfo.event.arena_name}}</view>
+					<view class="info_list_p">{{eventInfo.event.arena_location}}</view>
+				</view>
+			</view>
+			<view class="info_ul_li">
+				<view class="info_list_left">
+					<view class="info_list_span"></view>
+				</view>
+				<view class="info_list_right">
+					<view class="info_list_name">单向空间</view><view class="info_list_last"></view>
+					<view>一句话商家介绍</view>
+
+				</view>
+			</view>
+		</view>
+
+	</view>
+	<view class="info_people">
+		<view class="info_people_title">
+			<view class="info_people_p">可能遇到的伙伴</view>
+			<view class="info_people_span">全部{{eventInfo.collection.user.length}}人</view>
+		</view>
+		<scroll-view scroll-x="true" style=" white-space: nowrap; display: flex" >
+		<view class="info_people_list">
+			<block wx:for="{{eventInfo.collection.user}}" wx:for-item="eventPeople" wx:key="people" wx:for-index="index">
+				<image class="info_people_li" data-uid="{{eventPeople.uid}}" src="{{eventPeople.avatar}}"></image>
+			</block>
+			<view class="info_people_list_span">...</view>
+		</view>
+		</scroll-view>
+	</view>
+
+	<view class="info_active">
+		<view class="info_active_h3">活动详情</view>
+		<view class="info_active_p">{{eventInfo.event.event_content}}</view>
+	</view>
+	<view class="notice">
+		<view class="notice_h3">报名须知</view>
+		<view class="notice_p">{{eventInfo.event.event_notice}}</view>
+	</view>
+
+	<view class="may_like">
+		<text>猜你喜欢</text>
+		<scroll-view scroll-x="true" style=" white-space: nowrap; display: flex" >
+			
+			<block wx:for="{{eventInfo.may_like}}" wx:for-item="eventLike" wx:key="like" wx:for-index="index">
+				<view class="like_list" data-row_id="{{eventLike.row_id}}" bindtap="mayLike">
+					<image class="like_img" src="{{eventLike.image}}"></image>
+					<view class="like_name">{{eventLike.name}}</view>
+					<view class="like_mon">￥{{eventLike.end_ticket}}起</view>
+					<view class="like_time">{{eventLike.date_time}}</view>
+				</view>
+			</block>
+			
+		</scroll-view>
+	</view>
+
+	<view class="footer">
+		 <view class="fd-favorite" data-value="{{collect}}" data-event_id="{{eventInfo.event.event_id}}"  bindtap="collectionTag">
+		 <block wx:if="{{collect}}">
+		 	<image class="collect_img" src="../../dist/images/已收藏@3x.png"></image>
+		 </block>
+		 <block wx:else>
+		 	<image class="collect_img" src="../../dist/images/收藏活动@3x.png"></image>
+		 </block>
+		 <text class="{{collect ? 'fd-favorite-active' : ''}}">收藏</text>
+		 </view>
+		<block wx:if="{{eventInfo.event.stop_ticket_type==1}}">
+			<view class="button {{(now_date-event_start_date)>0?'hide':''}}" data-event_id="{{eventInfo.event.event_id}}" data-image="{{eventInfo.event.image}}" data-name="{{eventInfo.event.name}}"
+			data-date="{{eventInfo.event.start_date}}" data-address="{{eventInfo.event.arena_name}}"
+			bindtap="bindCheckout">优惠购票</view>
+		</block>
+		<block wx:elif="{{eventInfo.event.stop_ticket_type==2}}">
+			<view class="button {{(now_date-event_end_date)>0 ? 'hide' : ''}}" data-event_id="{{eventInfo.event.event_id}}" data-image="{{eventInfo.event.image}}" data-name="{{eventInfo.event.name}}"
+			data-date="{{eventInfo.event.start_date}}" data-address="{{eventInfo.event.arena_name}}"
+			bindtap="bindCheckout">优惠购票</view>
+		</block>
+		<block wx:elif="{{eventInfo.event.stop_ticket_type==3}}">
+			<view class="button {{(now_date-(event_start_date-86400000))>0?'hide':''}}" data-event_id="{{eventInfo.event.event_id}}" data-image="{{eventInfo.event.image}}" data-name="{{eventInfo.event.name}}"
+			data-date="{{eventInfo.event.start_date}}" data-address="{{eventInfo.event.arena_name}}"
+			bindtap="bindCheckout">优惠购票</view>
+		</block>
+
+	</view>
