@@ -32,6 +32,7 @@ Page({
     var that = this
     var orlat;
     var orlon;
+   
     wx.showNavigationBarLoading()
     wx.hideNavigationBarLoading()
 		var myAmapFun = new amapFile.AMapWX({key:'b615b3f4ff1e35e90835dc07ad211c34'});
@@ -100,6 +101,7 @@ Page({
 		that.onShow()
 	},
 	viewSearch: function() {
+		
 		wx.navigateTo({
 			url: '../search/search'
 		})
@@ -132,6 +134,12 @@ Page({
     viewEnentInfo:function(e){
     	wx.navigateTo({
 			url: '../eventInfo/eventInfo?event_id='+e.currentTarget.dataset.event_id
+		})
+    },
+    viewBannerDetail:function(e){
+    	 var data = e.currentTarget.dataset
+    	wx.navigateTo({
+			url: '../eventInfo/eventInfo?event_id='+data.action_id
 		})
     }
 })

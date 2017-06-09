@@ -64,8 +64,8 @@ width:100%;
   width:46px;
   height:46px;
   text-align:center;
-  margin-left:45%;
-margin-top:22px;
+  margin-left:100px;
+  margin-top:22px;
 }
 .wx_text{
   display:block;

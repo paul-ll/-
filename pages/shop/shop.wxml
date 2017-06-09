@@ -137,7 +137,7 @@
     <view class="pay_mon {{collect ? 'fd-favorite-active' : ''}}">
     共计<text class="{{total > 0 ? 'color_red':''}}">￥{{total}} ({{page}}张)</text></view>
 
-    <block wx:if="{{total > 0}}">
+    <block wx:if="{{page > 0}}">
         <view class="button" data-image="{{image}}" data-name="{{name}}" data-start_date="{{start_date}}" data-tickets="{{tickets}}" data-carts="{{carts}}"
         data-address="{{address}}" data-total="{{total}}" data-event_id="{{event_id}}"
         data-page="{{page}}"

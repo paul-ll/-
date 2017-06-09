@@ -20,31 +20,24 @@ Page({
     winHeight: 0,  
     // tab切换  
     currentTab: 0,  
-    suid:67,
-    uid:69,
+    suid:0,
+    uid:0,
     p:1,
     data_arr:[],
     feedlist_arr:[]
   },
-  onLoad:function(cb){
-    var that = this
-
-    console.log(app.globalData.userInfo)
-    // 检测是否存在用户信息
-    if (app.globalData.userInfo != null) {
-      that.setData({
-          userInfo: app.globalData.userInfo
-      })
-    } else {
-      app.getUserInfo()
-    }
-    typeof cb == 'function' && cb()
+  onLoad:function(option){
+    var that = this;
+    that.setData({
+      suid:option.suid
+    })
   },
   onShow:function(){
     var that = this;
 		douban.getEventList.call(that,config.apiList.getEventList,that.data.suid,that.data.p);
     douban.getFeedList.call(that,config.apiList.getFeedList,that.data.suid,that.data.p);
-    douban.getAddressList.call(that,config.apiList.getAddressList,that.data.uid);
+    douban.getUserProfile.call(that,config.apiList.getUserProfile,that.data.uid,that.data.suid);
+    // douban.getAddressList.call(that,config.apiList.getAddressList,that.data.uid);
     
     wx.getStorage({
       key: 'skin',

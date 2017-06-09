@@ -2,61 +2,124 @@ var douban = require('../../comm/script/fetch')
 var config = require('../../comm/script/config')
 Page({
 	data: {
-		films: [],
+		selected:true,
+        selected1:false,
+        type:'event',
+		event: [1,2,3],
+		user:[],
 		hasMore: true,
 		showLoading: true,
 		start: 0,
 		url: '',
-		keyword: '',
-		isNull: false,
-		nullTip: {
-			tipText: 'sorry，没有找到您要的内容，换个关键词试试吧',
-			actionText: '返回',
-			routeUrl: '../../pages/search/search'
-		}
+		keyword: ''
+	
 	},
-	onLoad: function(options) {
+	onLoad: function() {
 		var that = this
+		 var event =  wx.getStorageSync('search_event');
+    var user =  wx.getStorageSync('search_user');
 		that.setData({
-			url: options.url,
-			keyword: options.keyword,
-			title: options.keyword
+			event:event,
+			user: user
 		})
-		douban.search.call(that, that.data.url, that.data.keyword, that.data.start, config.count, function(data){
-			if (data.subjects.length == 0) {
-				that.setData({
-					isNull: true
-				})
-			}
-		})
+
+		
 	},
+	onReady: function () {
+    // 生命周期函数--监听页面初次渲染完成
+
+  },
+  onShow: function () {
+    // 生命周期函数--监听页面显示
+    var that = this;
+   
+
+
+
+  },
+  onHide: function () {
+    // 生命周期函数--监听页面隐藏
+
+  },
+  onUnload: function () {
+    // 生命周期函数--监听页面卸载
+
+  },
 	onPullDownRefresh: function() {
 		var that = this
-		that.setData({
-			films: [],
-			hasMore: true,
-			showLoading: true,
-			start: 0
-		})
-		douban.search.call(that, that.data.url, that.data.keyword, that.data.start, config.count)
+		that.onLoad();
 	},
-	onReachBottom: function() {
-		var that = this
-		if (!that.data.showLoading) {
-			douban.search.call(that, that.data.url, that.data.keyword, that.data.start, config.count)
-		}
-	},
-	viewFilmDetail: function(e) {
-		var data = e.currentTarget.dataset;
-		wx.redirectTo({
-			url: "../filmDetail/filmDetail?id=" + data.id
-		})
-	},
-	viewFilmByTag: function(e) {
+	user_info: function(e) {
 		var data = e.currentTarget.dataset
-		var keyword = data.tag
+		var uid = data.uid
 		wx.redirectTo({
-			url: '../searchResult/searchResult?url=' + encodeURIComponent(config.apiList.search.byTag) + '&keyword=' + keyword
+			url: '../my/my?suid='+uid
 		})
-	}
+	},
+	research: function(e) {
+    var that = this
+    var keyword = e.detail.value.keyword
+    if (keyword == '') {
+      message.show.call(that,{
+        content: '请输入内容',
+        icon: 'null',
+        duration: 1500
+      })
+      return false
+    } else {
+
+      var searchData = wx.getStorageSync('searchData') || []
+      searchData.push(keyword)
+      
+      wx.setStorageSync('searchData', searchData)
+
+      douban.Event.call(this,config.apiList.Event,keyword);
+     douban.User.call(this,config.apiList.User,keyword);
+     
+   
+      wx.redirectTo({
+        url: "../searchResult/searchResult"
+      })
+    }
+  },
+	event_info: function(e) {
+		var data = e.currentTarget.dataset
+		var event_id = data.event_id
+		wx.redirectTo({
+			url: '../eventInfo/eventInfo?event_id='+event_id
+		})
+	},
+	selected:function(e){
+		var data = e.currentTarget.dataset;
+		if( e.target.dataset.current === true ) {  
+      return false;  
+
+    } else {  
+      	this.setData({
+            selected1:false,
+            selected:true,
+            type:data.id
+        })
+        this.onLoad(data)
+    }  
+
+
+       
+    },
+    selected1:function(e){
+    	var data = e.currentTarget.dataset;
+		if( e.target.dataset.current === true ) {  
+      	return false;  
+
+    } else {  
+      	this.setData({
+            selected:false,
+            selected1:true,
+            type:data.id
+        })
+      	this.onLoad(data)
+    }  
+
+        
+    }
 })

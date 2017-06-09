@@ -34,7 +34,7 @@
 		<view class="info_ul_list">
 			<view class="info_ul_li">
 				<view class="info_list_left">
-					<view class="info_list_span"></view>
+					<image class="info_list_span" src="../../../dist/images/time.png"></image>
 				</view>
 				<view class="info_list_right">
 					<view>{{eventInfo.event.start_date}} {{eventInfo.event.week}} </view>
@@ -43,7 +43,7 @@
 			</view>
 			<view class="info_ul_li">
 				<view class="info_list_left">
-					<view class="info_list_span"></view>
+					<image class="info_list_span" src="../../../dist/images/location@3x.png"></image>
 				</view>
 				<view class="info_list_right">
 					<view class="info_list_p">{{eventInfo.event.arena_name}}</view>
@@ -52,7 +52,7 @@
 			</view>
 			<view class="info_ul_li">
 				<view class="info_list_left">
-					<view class="info_list_span"></view>
+					<image class="info_list_span" src="../../../dist/images/hold.png"></image>
 				</view>
 				<view class="info_list_right">
 					<view class="info_list_name">单向空间</view><view class="info_list_last"></view>

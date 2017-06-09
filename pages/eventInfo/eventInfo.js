@@ -5,7 +5,7 @@ Page({
   data:{
     eventInfo: [],
     collect:false,
-    uid:69,
+    uid:0,
     type:'event',
     arr_uesr:[],
     now_data:0,
@@ -43,19 +43,26 @@ Page({
     // 判断原来是否收藏，是则删除，否则添加
     var data = e.currentTarget.dataset;
     var event_id = parseInt(data.event_id)
-   
-        if(data.value){
+    var uid = wx.getStorageSync('uid');
+    if(uid == ''){
+     wx.navigateTo({
+      url: "../login/login"
+    })
+  }else{
+    if(data.value){
           that.setData({
             collect:false
           })
-          douban.channelCollection.call(that,config.apiList.channelCollection,event_id,that.data.uid,that.data.type)
+          douban.channelCollection.call(that,config.apiList.channelCollection,event_id,uid,that.data.type)
         
       }else{
         that.setData({
             collect:true
           })
-        douban.addCollection.call(that,config.apiList.addCollection,event_id,that.data.uid,that.data.type)
+        douban.addCollection.call(that,config.apiList.addCollection,event_id,uid,that.data.type)
       }
+  }
+        
 
     
 
@@ -119,17 +126,26 @@ Page({
 
   },
   bindCheckout : function(e){
-    wx.showToast({
-      title: '立即购买',
-      icon: 'success',
-      duration: 1000
-    });
+     var uid = wx.getStorageSync('uid');
+     if(uid == ''){
+        wx.navigateTo({
+          url: "../login/login"
+        })
+     }else{
 
-    var data = e.currentTarget.dataset;
 
-    wx.navigateTo({
-      url: "../shop/shop?event_id=" + data.event_id+"&image="+data.image+"&name="+data.name+"&address="+data.address+"&date="+data.date
-    })
+      var data = e.currentTarget.dataset;
+
+      wx.navigateTo({
+        url: "../shop/shop?event_id=" + data.event_id+"&image="+data.image+"&name="+data.name+"&address="+data.address+"&date="+data.date
+      })
+       wx.showToast({
+        title: '立即购买',
+        icon: 'success',
+        duration: 1000
+      });
+     }
+    
 
     
   },

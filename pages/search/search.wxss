@@ -27,8 +27,6 @@
     box-sizing: border-box;
     width: 100%;
     height: 80rpx;
-    padding-left: 140rpx;
-    padding-right: 20rpx;
     border-radius: 10rpx;
     border: 1px solid #eee;
     font-family: "微软雅黑";
@@ -73,4 +71,22 @@
     background-color: #fbfbfb;
     margin: 0 10rpx 10rpx 0;
     color: #555;
+}
+.clear_btn{
+    position:relative;
+    display:block;
+    margin-left:auto;
+    margin-right:auto;
+    padding-left:14px;
+    padding-right:14px;
+    box-sizing:border-box;
+    font-size:18px;
+    text-align:center;
+    text-decoration:none;
+    line-height:2.55555556;
+    border-radius:5px;
+    -webkit-tap-highlight-color:transparent;
+    overflow:hidden;
+    color:#000000;
+    background-color:#F8F8F8;
 }

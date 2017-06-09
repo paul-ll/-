@@ -112,7 +112,6 @@ Page({
   	that.setData({
   		clock:that.date_format(that.data.total_micro_second)
   	});
-
   	if (that.data.total_micro_second <= 0) {
   		that.setData({
   			clock:"已经截止"
@@ -122,17 +121,17 @@ Page({
   	}    
   	setTimeout(function(){
     	// 放在最后--
-		that.data.total_micro_second -= 10;
+		that.data.total_micro_second -= 1;
 		that.count_down();
 	}
-	,10)
+	,1000)
 },
 
 // 时间格式化输出，如03:25:19 86。每10ms都会调用一次
  date_format:function(micro_second) {
  	var that = this
   	// 秒数
-  	var second = Math.floor(micro_second / 1000);
+  	var second = Math.floor(micro_second );
   	// 小时位
   	var hr = Math.floor(second / 3600);
   	// 分钟位
@@ -141,7 +140,6 @@ Page({
 	var sec = that.fill_zero_prefix((second - hr * 3600 - min * 60));// equal to => var sec = second % 60;
 	// 毫秒位，保留2位
 	var micro_sec = that.fill_zero_prefix(Math.floor((micro_second % 1000) / 10));
-
 	return  min + ":" + sec ;
 },
 

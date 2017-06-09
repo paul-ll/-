@@ -85,15 +85,20 @@ module.exports = {
         getTicketDelivery: base_url+'event/getTicketDelivery',
         // 提交订单
         submitOrder: base_url+'order/submitOrder',
+        // 支付订单
+        orderPay: base_url+'order/orderPay',
         // 活动搜索
         Event: base_url+'search/Event',
+        // 用户搜索
+        User: base_url+'search/User',
         // 登录
         loginByPhone: base_url+'passport/loginByPhone',
         // 发送验证码
         sendSmsCode: base_url+'passport/sendSmsCode',
         // 注册
         doRegister: base_url+'register/doRegister',
-
+        // 第三方授权方式注册和登录
+        loginByThird: base_url+'passport/loginByThird',
 
         
 

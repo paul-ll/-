@@ -2,6 +2,7 @@
 var douban = require('../../comm/script/fetch')
 var util = require('../../util/util')
 var config = require('../../comm/script/config')
+var app = getApp()
 function countdown(that) {
     var second = that.data.second;
     if (second == 0) {
@@ -23,6 +24,9 @@ function countdown(that) {
 }
 Page({
  data:{
+  platform:2,
+  openid:'',
+  access_token:'',
   userName:'',
   userPassword:'',
   winWidth: 0,  
@@ -201,8 +205,24 @@ var reg_code = data.reg_code;
       phone:e.detail.value
     })
  },
+ // 微信登录
  loginByThird:function(){
-  
+  var that = this;
+  var d = app.globalData;
+  var code = wx.getStorageSync('code');
+
+  var platform = that.data.platform;
+
+   var obj_token = wx.getStorageSync('obj_token');
+  console.log(obj_token)
+  console.log(platform)
+
+   
+
+
+   
+  douban.loginByThird.call(that,config.apiList.loginByThird,platform,obj_token.openid,obj_token.access_token)
+   
  },
  //加载完后，处理事件 
  // 如果有本地数据，则直接显示

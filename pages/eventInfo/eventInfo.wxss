@@ -247,12 +247,11 @@ border-radius: 2px;
     .info_list_left{
         margin:18px 10px 0 15px;
     }
-   .info_list_span{
+    .info_list_span{
     width:13px;
     height:15px;
     display:block;
-    background:url(http://www.henkuai.com/static/image/common/hot_2.gif)
-   }
+    }
    .info_list_right{
     font-family: PingFangSC-Regular;
     font-size: 16px;

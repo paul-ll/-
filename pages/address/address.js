@@ -4,12 +4,25 @@ var util = require('../../util/util')
 var app = getApp();
 Page({
 	data:{
-    uid:69,
+    uid:0,
 	address_arr:[],
 	index_id:[],
 	// addressObjects:{}
   },
-	add: function () {
+  onLoad: function(options) {
+        var that = this
+        var uid = options.uid;
+        console.log(uid)
+        that.setData({
+				uid:uid
+			})
+		
+
+
+
+    },
+	add: function (e) {
+		console.log(this.data.uid)
 		wx.navigateTo({
 			url: '../add_address/add_address?uid='+this.data.uid
 		});
@@ -17,6 +30,7 @@ Page({
 
 	onShow: function () {
 		var that = this;
+		console.log(that.data.uid)
 	 douban.getAddressList.call(that,config.apiList.getAddressList,that.data.uid);
 	 
 	},
@@ -44,6 +58,7 @@ Page({
 		that.setData({
 			address_arr:addressObjects
 		})
+		console.log(that.data.uid)
  douban.setDefaultAddress.call(that,config.apiList.setDefaultAddress,data_id,that.data.uid);
 
 		// 提交网络更新该用户所有的地址
@@ -76,6 +91,7 @@ Page({
 		var detail = that.data.address_arr[index].address;
 		var area_id = that.data.address_arr[index].area_id;
 		console.log(data_id)
+		console.log(that.data.uid)
 		wx.navigateTo({
 			url: '../add_address/add_address?id='+data_id+'&uid='+that.data.uid+'&name='+name+'&phone='+phone+'&province='+province+'&city='+city+'&county='+county+'&detail='+detail+'&area_id='+area_id
 		});

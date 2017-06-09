@@ -69,16 +69,14 @@ Page({
        		showLoading: false,
 			showContent: true,
        	})
-       	wx.getStorage({
-		 key: 'uid',
-		 success: function(res) {
-		   console.log(res.data)
-		   that.setData({
-		   	uid:res.data
+
+
+       	 var uid = wx.getStorageSync('uid');
+       	  that.setData({
+		   	uid:uid
 		   })
-		    douban.getTicketDelivery.call(that, config.apiList.getTicketDelivery, event_id, res.data)
-		 } 
-		})
+       	 douban.getTicketDelivery.call(that, config.apiList.getTicketDelivery, event_id,uid)
+       
 
 
 
@@ -209,6 +207,8 @@ Page({
     });
      if(ship_type == '电子票'){
     	that.setData({
+    		userN:"",
+    		phoneN:"",
     		ship_type_num:1,
     		all_num:that.data.total,
     		postage:0,
@@ -236,11 +236,12 @@ Page({
 	},
 	// 修改地址
 	address_change:function(e){
-		console.log(this.data.uid)
+		var that = this;
+		console.log(that.data.uid)
+
 		wx.navigateTo({
-			// url: '../checkout/checkout?cartIds=' + cartIds + '&amount=' + this.data.total
-			url: '../address_init/address_init?uid ='+this.data.uid
-		});
+	      url: "../address_init/address_init?uid="+that.data.uid
+	    })
 
 	},
 	
@@ -313,15 +314,20 @@ Page({
 	      duration: 1500
 	     })
 	   return false;
+	  }
 
-	    // 提交订单
+
+ // 提交订单
+
+	  
 
 
+	 console.log(that.data.carts)
 	 var original_price=0;
      var current_price=0;
      var cut_pic=0;
      var page_arr = that.data.carts;
-     console.log(that.data.carts)
+    
    for(var i=0;i<page_arr.length;i++){
    
    		original_price+=(parseFloat(that.data.tickets[i].original_price)*parseFloat(page_arr[i]));
@@ -369,7 +375,7 @@ wx.showToast({
 	duration: 1000
 });
 
-	  }
+
 	}else{
 		 // 提交订单
 
@@ -429,10 +435,10 @@ wx.showToast({
 
     
 		
-		wx.navigateTo({
-			// url: '../checkout/checkout?cartIds=' + cartIds + '&amount=' + this.data.total
-			url: '../payment/payment'
-		});
+		// wx.navigateTo({
+		// 	// url: '../checkout/checkout?cartIds=' + cartIds + '&amount=' + this.data.total
+		// 	url: '../payment/payment'
+		// });
 	},
 	sum: function() {
 		var add=this.data.filmDetail;

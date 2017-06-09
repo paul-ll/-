@@ -21,7 +21,7 @@
 				<!-- 活动时间 -->
 				<text class="carts-price">{{item.date}}</text>
 				<!-- 活动地点 -->
-				<text class="carts-address">x{{item.event_address}}</text>
+				<text class="carts-address">{{item.event_address}}</text>
 			</view>
 		</view>
 	</view>
@@ -36,8 +36,12 @@
 
 	<view class="order-footer">
 		
+
+
+		<text bindtap="receive" data-object-id="{{item.objectId}}" class="{{item.order_status != 1 ? 'hidden': ''}}">去支付</text>
 		<text bindtap="receive" data-object-id="{{item.objectId}}" class="{{item.order_status != 9 ? 'hidden': ''}}">重新购买</text>
-		<text bindtap="receive" data-object-id="{{item.objectId}}" class="{{item.order_status != 4 ? 'hidden': ''}}">查看物流</text>
+		<text bindtap="receive" data-object-id="{{item.objectId}}" class="{{item.order_status != 7 ? 'hidden': ''}}">查看电子票</text>
+		
 	
 	</view>
 	

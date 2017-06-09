@@ -2,6 +2,7 @@ var config = require('./config.js')
 var message = require('../../component/message/message')
 var amapFile = require('../../dist/amap-wx.js')
 var util = require('../../util/util')
+var app = getApp()
 
 //获取城市活动
   function search_list(url,site,page,pageLen,cate){
@@ -47,12 +48,13 @@ var util = require('../../util/util')
       },
       success: function(res){
         console.log(res.data)
-       
-       // that.setData({
-       //      films:objlist,
-       //      showLoading: false,
-       //      hasMore: false,
-       //    })
+       wx.setStorageSync('user', res.data);//存储userInfo
+       wx.setStorageSync('uid', res.data.data.uid);//存储uid
+       wx.setStorageSync('suid', res.data.data.uid);//存储suid
+
+  
+ 
+   wx.navigateBack(); 
 
       }
     })
@@ -99,6 +101,32 @@ function doRegister(url,phone,reg_code,password,code_id){
         "Content-Type": "application/x-www-form-urlencoded"
       },
       success: function(res){
+
+     wx.setStorageSync('user', res.data);//存储userInfo
+       wx.setStorageSync('uid', res.data.data.uid);//存储uid
+       wx.setStorageSync('suid', res.data.data.uid);//存储suid
+   wx.navigateBack(); 
+
+      }
+    })
+
+}
+
+// 第三方授权方式注册和登录
+function loginByThird(url,platform,openid,access_token){
+  var that = this
+    wx.request({
+        url: url,
+      method: 'POST', 
+      data: util.json2Form({ 
+        platform: platform,
+        openid: openid,
+        access_token: access_token
+      }), 
+      header: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      success: function(res){
         console.log(res.data)
        
        // that.setData({
@@ -109,11 +137,6 @@ function doRegister(url,phone,reg_code,password,code_id){
 
       }
     })
-
-}
-
-// 第三方授权方式注册和登录
-function loginByThird(){
   
 }
 
@@ -280,11 +303,12 @@ function loginByThird(){
         "Content-Type": "application/x-www-form-urlencoded"
       },
       success: function(res){
+        var uid = wx.getStorageSync('uid');
         console.log(res.data.data)
           collectArr=res.data.data.collection;
         for(var i = 0;i<collectArr.user.length;i++){
             arr_list.push(collectArr.user[i].uid)
-           if(collectArr.user[i].uid==that.data.uid){
+           if(collectArr.user[i].uid==uid){
               that.setData({
                 collect:true
               })
@@ -625,17 +649,66 @@ getTicketByGames.call(that, config.apiList.getTicketByGames,event_id,res.data.da
       },
       success: function(res){
         console.log(res)
-       // that.setData({
-       //      filmDetail:res.data.data,
-       //      showLoading: false,
-       //       showContent: true
-       //    })
+        var obj = res.data.data;
+        var d = app.globalData;
+       
+        wx.requestPayment({
+          'appId' : d.appid,
+          'timeStamp': (obj.timestamp).toString(),
+          'nonceStr': obj.noncestr,
+          'package': 'prepay_id='+obj.prepayid,
+          'signType': 'MD5',
+          'paySign': obj.sign,
+        'success':function(res){
+          console.log(res);
+          console.log('success');
+        },
+        'fail':function(res){
+          console.log(res);
+          console.log('fail');
+        },
+        'complete': function(res){
+          console.log(res);console.log('complete');
+        }
+      });
+
+
+
+
        
       }
     })
     
   }
 
+
+// 支付订单
+function orderPay(url,order_num,pay_type){
+  var that = this
+  message.hide.call(that)
+     wx.request({
+        url: url,
+      method: 'POST', 
+      data: util.json2Form({ 
+        order_num: order_num,
+        pay_type:pay_type
+      }), 
+      header: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      success: function(res){
+        console.log(res.data.data)
+       // that.setData({
+       //      filmDetail:res.data.data,
+       //      showLoading: false,
+       //       showContent: true
+       //    })
+        wx.stopPullDownRefresh()
+      typeof cb == 'function' && cb(res.data)
+      }
+    })
+    
+}
 
 //通过id获取活动详情
   function getActiveinfo(url,id,site,cb){
@@ -900,7 +973,7 @@ function setDefaultAddress(url,id,uid){
       },
       success: function(res){
        console.log(res.data.data)
-
+       console.log(parseInt(res.data.data.order.expire)-parseInt(res.data.data.order.now))
        that.setData({
             total_micro_second:parseInt(res.data.data.order.expire)-parseInt(res.data.data.order.now),
             goods:res.data.data,
@@ -1086,9 +1159,111 @@ function setDefaultAddress(url,id,uid){
   }
 
 
+// 活动搜索
+function Event(url, search_key){
+  var that = this
+  message.hide.call(that)
+  var url = decodeURIComponent(url)
+
+    wx.request({
+      url: url,
+      data: {
+      search_key:search_key
+      },
+      method: 'GET',
+      header: {
+        "Content-Type": "application/json,application/json"
+      },
+      success: function(res){
+        console.log(res.data.data)
+        
+        wx.setStorageSync('search_event', res.data.data.event);//存储搜索活动
+         wx.setNavigationBarTitle({
+              title: search_key
+          })
+        // if(res.data.subjects.length === 0){
+        //   that.setData({
+        //     hasMore: false,
+        //     showLoading: false
+        //   })
+        // }else{
+        //   that.setData({
+        //     films: that.data.films.concat(res.data.subjects),
+        //     start: that.data.start + res.data.subjects.length,
+        //     showLoading: false
+        //   })
+        //   wx.setNavigationBarTitle({
+        //       title: keyword
+        //   })
+        // }
+        wx.stopPullDownRefresh()
+        typeof cb == 'function' && cb(res.data)
+      },
+      fail: function() {
+        that.setData({
+            showLoading: false
+        })
+        message.show.call(that,{
+          content: '网络开小差了',
+          icon: 'offline',
+          duration: 3000
+        })
+      }
+    })
+  
+}
 
 
-
+// 用户搜索
+function User(url, search_key){
+    var that = this
+  message.hide.call(that)
+  var url = decodeURIComponent(url)
+ 
+    wx.request({
+      url: url,
+      data: {
+       search_key:search_key
+      },
+      method: 'GET',
+      header: {
+        "Content-Type": "application/json,application/json"
+      },
+      success: function(res){
+        console.log(res.data)
+        wx.setStorageSync('search_user', res.data.data.user);//存储搜索用户
+         
+        // if(res.data.subjects.length === 0){
+        //   that.setData({
+        //     hasMore: false,
+        //     showLoading: false
+        //   })
+        // }else{
+        //   that.setData({
+        //     films: that.data.films.concat(res.data.subjects),
+        //     start: that.data.start + res.data.subjects.length,
+        //     showLoading: false
+        //   })
+        //   wx.setNavigationBarTitle({
+        //       title: keyword
+        //   })
+        // }
+        wx.stopPullDownRefresh()
+        typeof cb == 'function' && cb(res.data)
+      },
+      fail: function() {
+        that.setData({
+            showLoading: false
+        })
+        message.show.call(that,{
+          content: '网络开小差了',
+          icon: 'offline',
+          duration: 3000
+        })
+      }
+    })
+  
+}
 // 搜索（关键词或者类型）
 function search(url, keyword, start, count, cb){
   var that = this
@@ -1173,6 +1348,12 @@ module.exports = {
   loginByPhone:loginByPhone,
   sendSmsCode:sendSmsCode,
   doRegister:doRegister,
+  loginByThird:loginByThird,
+  orderPay:orderPay,
+  Event:Event,
+  User:User,
+
+
 
   // fetchFilms: fetchFilms,
   // fetchFilmDetail: fetchFilmDetail,

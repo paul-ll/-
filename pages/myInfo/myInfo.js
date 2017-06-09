@@ -9,8 +9,8 @@ Page({
     winHeight: 0,  
     // tab切换  
     currentTab: 0,  
-    suid:67,
-    uid:69,
+    suid:0,
+    uid:0,
     p:1,
     data_arr:[],
     feedlist_arr:[],
@@ -19,22 +19,23 @@ Page({
   onLoad:function(cb){
     var that = this
 
-    console.log(app.globalData.userInfo)
     // 检测是否存在用户信息
-    if (app.globalData.userInfo != null) {
-      that.setData({
-          userInfo: app.globalData.userInfo
-      })
-    } else {
-      app.getUserInfo()
-    }
+   
     typeof cb == 'function' && cb()
   },
   onShow:function(){
     var that = this;
-		// douban.getEventList.call(that,config.apiList.getEventList,that.data.suid,that.data.p);
-    // douban.getFeedList.call(that,config.apiList.getFeedList,that.data.suid,that.data.p);
-    douban.getUserProfile.call(that,config.apiList.getUserProfile,that.data.uid,that.data.suid);
+    var user = wx.getStorageSync('user');
+    console.log(user.data)
+    var uid = wx.getStorageSync('uid');
+    var suid = wx.getStorageSync('suid');
+that.setData({
+          userInfo: user.data
+      })
+
+    douban.getUserProfile.call(that,config.apiList.getUserProfile,uid,suid);
+
+    
     wx.getStorage({
       key: 'skin',
       success: function(res){
@@ -59,13 +60,6 @@ Page({
       wx.stopPullDownRefresh()
     })
   },
-  viewGridDetail: function(e) {
-    var data = e.currentTarget.dataset
-    console.log(data.url);
-		wx.navigateTo({
-			url: "../" + data.url + '/' + data.url
-		})
-  },
   viewSkin: function() {
 		wx.navigateTo({
 			url: "../skin/skin"
@@ -82,29 +76,72 @@ Page({
   
   },  
   active_into:function(){
-    	wx.navigateTo({
-			url: "../my/my"
-		})
+var uid = wx.getStorageSync('uid');
+console.log(uid)
+if(uid == ''){
+  wx.navigateTo({
+      url: "../login/login"
+    })
+}else{
+  wx.navigateTo({
+      url: "../my/my?suid="+uid
+    })
+}
+
   },
   addressInto:function(){
-    	wx.navigateTo({
-			url: "../address/address"
-		})
+   var uid = wx.getStorageSync('uid');
+console.log(uid)
+if(uid == ''){
+  wx.navigateTo({
+      url: "../login/login"
+    })
+}else{
+  wx.navigateTo({
+      url: "../address/address?uid="+uid
+    })
+}
+    	
   },
    listInto:function(){
-    wx.navigateTo({
-      url: "../list/list?uid="+this.data.uid
+     var uid = wx.getStorageSync('uid');
+  if(uid == ''){
+     wx.navigateTo({
+      url: "../login/login"
     })
+  }else{
+    wx.navigateTo({
+      url: "../list/list?uid="+uid
+    })
+  }
+
+   
   },
   ticketInto:function(){
-    wx.navigateTo({
-      url: "../favorite/favorite?uid="+this.data.uid
-    })
-  },
-  collectionInto:function(){
+    var uid = wx.getStorageSync('uid');
+  if(uid == ''){
      wx.navigateTo({
-      url: "../collection/collection?uid="+this.data.uid
+      url: "../login/login"
     })
+  }else{
+    wx.navigateTo({
+      url: "../favorite/favorite?uid="+uid
+    })
+  }
+    
+  },
+  collectionInto:function(e){
+  var uid = wx.getStorageSync('uid');
+  if(uid == ''){
+     wx.navigateTo({
+      url: "../login/login"
+    })
+  }else{
+    wx.navigateTo({
+      url: "../collection/collection?uid="+uid
+    })
+  }
+     
   },
   /** 
    * 点击tab切换 

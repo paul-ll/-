@@ -3,25 +3,34 @@ var douban  = require('../../comm/script/fetch')
 var config  = require('../../comm/script/config')
 Page({
   data:{
-    searchType: 'keyword',
     hotKeyword: config.hotKeyword,
-    hostiry_keyword: ['1','2']
+    history_keyword: [],
+    event:[],
+    user:[]
   },
-  changeSearchType: function() {
-    var types = ['默认', '类型'];
-    var searchType = ['keyword', 'tag']
-    var that = this
-    wx.showActionSheet({
-      itemList: types,
-      success: function(res) {
-        console.log(res)
-        if (!res.cancel) {
-          that.setData({
-            searchType: searchType[res.tapIndex]
-          })
-        }
-      }
-    })
+  onLoad:function(){
+    var that= this;
+    var getSearch = wx.getStorageSync('searchData');
+    console.log(getSearch);
+    that.setData({
+        history_keyword:getSearch
+      })
+  },
+  onReady: function () {
+    // 生命周期函数--监听页面初次渲染完成
+
+  },
+  onShow: function () {
+    // 生命周期函数--监听页面显示
+    var that = this;
+  },
+  onHide: function () {
+    // 生命周期函数--监听页面隐藏
+
+  },
+  onUnload: function () {
+    // 生命周期函数--监听页面卸载
+
   },
   search: function(e) {
     var that = this
@@ -34,24 +43,53 @@ Page({
       })
       return false
     } else {
-      var searchUrl = that.data.searchType == 'keyword' ? config.apiList.search.byKeyword : config.apiList.search.byTag
+
+      var searchData = wx.getStorageSync('searchData') || []
+      searchData.push(keyword)
+      
+      wx.setStorageSync('searchData', searchData)
+
+      douban.Event.call(this,config.apiList.Event,keyword);
+     douban.User.call(this,config.apiList.User,keyword);
+     
+   
       wx.redirectTo({
-        url: '../searchResult/searchResult?url=' + encodeURIComponent(searchUrl) + '&keyword=' + keyword
+        url: "../searchResult/searchResult"
       })
     }
   },
   searchByKeyword: function(e) {
     var that = this
-    var keyword = e.currentTarget.dataset.keyword
-    wx.redirectTo({
-      url: '../searchResult/searchResult?url=' + encodeURIComponent(config.apiList.search.byKeyword) + '&keyword=' + keyword
-    })
+    var keyword = e.currentTarget.dataset.keyword;
+     var searchData = wx.getStorageSync('searchData') || []
+      searchData.push(keyword)
+      
+      wx.setStorageSync('searchData', searchData)
+    
+    douban.Event.call(that,config.apiList.Event,keyword);
+     douban.User.call(that,config.apiList.User,keyword);
+      wx.redirectTo({
+        url: "../searchResult/searchResult"
+      })
   },
   searchByTag: function(e) {
     var that = this
     var keyword = e.currentTarget.dataset.keyword
-    wx.redirectTo({
-      url: '../searchResult/searchResult?url=' + encodeURIComponent(config.apiList.search.byTag) + '&keyword=' + keyword
-    })
+
+     douban.Event.call(that,config.apiList.Event,keyword);
+     douban.User.call(that,config.apiList.User,keyword);
+   
+      wx.redirectTo({
+        url: "../searchResult/searchResult"
+      })
+  },
+  clearSearchStorage:function(){
+      wx.setStorageSync('searchData',[])
+      
+      wx.redirectTo({
+        url: '../search/search'
+      })
+      // this.onLoad();
+      
   }
 })

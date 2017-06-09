@@ -4,25 +4,29 @@ var util = require('../../util/util')
 var app = getApp();
 Page({
 	data:{
-    uid:69,
+    uid:0,
 	address_arr:[],
 	index_id:[],
 	index:0
 	// addressObjects:{}
   },
-	add: function () {
+  onLoad: function(options) {
+        var that = this
+        var uid = options.uid;
+        console.log(uid)
+        that.setData({
+				uid:uid
+			})
+    },
+	add_sit: function (e) {
 		var length = this.data.address_arr.length; 
-		console.log(length)
-		wx.navigateTo({
+		wx.redirectTo({
 			url: '../add_address/add_address?uid='+this.data.uid+'&length='+length
 		});
 	},
-
 	onShow: function () {
-
-
-
 		var that = this;
+		console.log(that.data.uid)
 		console.log(that.data.address_arr)
 	 douban.getAddressList.call(that,config.apiList.getAddressList,that.data.uid);
 	 
@@ -67,7 +71,7 @@ Page({
 		  })
 	
 		console.log(addressObjects[index])
-		
+		console.log(that.data.uid)
  douban.setDefaultAddress.call(that,config.apiList.setDefaultAddress,data_id,that.data.uid);
 
 		// 提交网络更新该用户所有的地址
@@ -89,6 +93,7 @@ Page({
 	edit: function (e) {
 		var that = this;
 		// 取得下标
+		console.log(that.data.uid)
 		var index = parseInt(e.currentTarget.dataset.index);
 		// 取出id值
 		var data_id = parseInt(e.currentTarget.dataset.id);
@@ -118,7 +123,7 @@ Page({
 
 		
 
-		wx.navigateTo({
+		wx.redirectTo({
 			url: '../add_address/add_address?id='+data_id+'&uid='+that.data.uid+'&name='+name+'&phone='+phone+'&province='+province+'&city='+city+'&county='+county+'&detail='+detail+'&area_id='+area_id+'&is_default='+is_default+'&length='+length
 		});
 	}

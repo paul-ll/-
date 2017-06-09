@@ -28,6 +28,7 @@
     "pages/cart/cart",
     "pages/detail/detail",
     "pages/goods/goods",
+    "pages/login/login",
     "pages/shop/shop",
     "pages/myInfo/myInfo",
     "pages/address_init/address_init",

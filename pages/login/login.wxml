@@ -53,9 +53,9 @@
     </swiper-item>  
    
 </swiper>  
-  <view class="fixed_wx">
+  <view class="fixed_wx" bindtap="loginByThird">
     <text class="wx_text">微信登录</text>
-    <image class="wx_img" src="../../../dist/images/微信@2x.png"></image>
+    <image class="wx_img" src="../../../dist/images/wx2x.png"></image>
   </view>
 </view>
 

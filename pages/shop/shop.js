@@ -49,7 +49,7 @@ Page({
 		douban.getGamesTicket.call(that, config.apiList.getGamesTicket,event_id)
 		
 		var games_id = wx.getStorageSync('games_id');
-
+		console.log(games_id)
 		that.setData({
 			games_id:games_id,
 			image:image,

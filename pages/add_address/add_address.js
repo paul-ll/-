@@ -64,7 +64,7 @@ Page({
 		// 订单新增地址
 		 var page_address = getCurrentPages();
 		  var currPage = page_address[page_address.length - 1];   //当前页面
-		  var prevPage = page_address[page_address.length - 3];  //上2个页面
+		  var prevPage = page_address[page_address.length - 2];  //上2个页面
 
 		  //直接调用上一个页面的setData()方法，把数据存到上一个页面中去
 		
