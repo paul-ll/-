@@ -5,25 +5,39 @@ var app = getApp();
 Page({
 	data: {
 		orders: [],
+		isFromSearch: true, 
 		p:1,
 		pcount:15,
+		status:'',
+		searchLoading: false, //"上拉加载"的变量，默认false，隐藏  
+    searchLoadingComplete: false  //“没有数据”的变量，默认false，隐藏
 	},
 	onLoad: function (options) {
 		var that = this;
 		// 订单状态，已下单为0，已付为1，已发货为2，已收货为3
 		var status = parseInt(options.uid);
-		douban.orderList.call(that,config.apiList.orderList,status,that.data.p,that.data.pcount);
+		that.setData( {
+          status:status
+        })
+		
 		// 存为全局变量，控制支付按钮是否显示
 		// this.setData({
 		// 	status: status
 		// });
 	},
-	onShow: function(options) {
-		
-		
-		// this.reloadData();
-		
-	},
+	onShow: function( e ) {
+		var that = this;
+		console.log(that.data.p)
+		douban.orderList.call(that,config.apiList.orderList,that.data.status,that.data.p,that.data.pcount);
+    wx.getSystemInfo( {
+      success: ( res ) => {
+        that.setData( {
+          windowHeight: res.windowHeight,
+          windowWidth: res.windowWidth
+        })
+      }
+    })
+  },
 	reloadData: function() {
 		// 声明一个class
 		// var Address = AV.Object.extend('Address');
@@ -106,30 +120,57 @@ Page({
 	},
 	receive: function(e) {
 		var that = this;
-		wx.showModal({
-			title: '请确认',
-			content: '确认要收货吗',
-			success: function(res) {
-				if (res.confirm) {
-					var objectId = e.currentTarget.dataset.objectId;
-					// var order = new AV.Object.createWithoutData('Order', objectId);
-					order.set('status', 3);
-					order.save().then(function () {
-						wx.showToast({
-							'title': '确认成功'
-						});
-						that.reloadData();
-					});
+
+
+		// wx.showModal({
+		// 	title: '请确认',
+		// 	content: '确认要收货吗',
+		// 	success: function(res) {
+		// 		if (res.confirm) {
+		// 			var objectId = e.currentTarget.dataset.objectId;
+		// 			// var order = new AV.Object.createWithoutData('Order', objectId);
+		// 			order.set('status', 3);
+		// 			order.save().then(function () {
+		// 				wx.showToast({
+		// 					'title': '确认成功'
+		// 				});
+		// 				that.reloadData();
+		// 			});
 					
-				}
-			}
-		})
+		// 		}
+		// 	}
+		// })
 	},
 	showGoods: function (e) {
-		var order_id = e.currentTarget.dataset.objectId;
+		var data= e.currentTarget.dataset;
+		var order_id = data.order_id;
+		var num = data.num;
 		console.log(order_id)
+		console.log(num)
 		wx.navigateTo({
-			url: '../detail/detail?order_id=' + order_id
+			url: '../detail/detail?order_id=' + order_id+"&num="+num
 		});
-	}
+	},
+	reshop:function(e){
+		var event_id = e.currentTarget.dataset.event_id;
+		wx.navigateTo({
+			url: '../eventInfo/eventInfo?event_id=' + event_id
+		});
+	},
+	 pullDownRefresh: function( e ) {
+    this.onShow()
+  },
+	pullUpLoad: function( e ) {
+		var that = this;
+ if(!that.data.searchLoadingComplete){  
+      that.setData({  
+        p: that.data.p+1,  //每次触发上拉事件，把searchPageNum+1  
+        isFromSearch: false,  //触发到上拉事件，把isFromSearch设为为false  
+        searchLoading: true   //把"上拉加载"的变量设为false，显示 
+      });  
+
+     that.onShow();
+    }   
+  }
+
 });

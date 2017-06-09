@@ -53,6 +53,7 @@ Page({
 		var games_obj = JSON.parse(options.games_obj);
 		console.log(games_obj)
 		console.log(carts)
+		
 		console.log(event_id)
 		console.log(time)
         that.setData({
@@ -391,7 +392,7 @@ wx.showToast({
    		current_price+=(parseFloat(that.data.tickets[i].current_price)*parseFloat(page_arr[i]));
    }  
 
-cut_pic = original_price - current_price;
+// cut_pic = original_price - current_price;
 
 var event_id = parseInt(that.data.event_id);
 console.log(that.data.uid)
@@ -404,11 +405,11 @@ console.log(that.data.games_obj.start_time)
 console.log(that.data.games_obj.end_time)
 var page = parseInt(that.data.page);
 console.log(page)
-var total_up = original_price*100;
+var total_up = current_price*100;
 console.log(total_up)
 var postage_up = parseInt(that.data.postage*100);
 console.log(postage_up)
-var cut_pic_up = parseInt(cut_pic*100);
+var cut_pic_up =0;
 console.log(cut_pic_up)
 var all_num_up = parseInt(that.data.all_num*100);
 console.log(all_num_up)

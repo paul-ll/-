@@ -934,6 +934,7 @@ function setDefaultAddress(url,id,uid){
   // 我的订单列表
    function orderList(url,uid,p,pcount){
         var that = this
+        var order_arr=[];
     message.hide.call(that)
      wx.request({
         url: url,
@@ -947,12 +948,32 @@ function setDefaultAddress(url,id,uid){
       //   "Content-Type": "application/x-www-form-urlencoded"
       // },
       success: function(res){
+
+       
+      if(res.data.data.order.length > 0){  
+        let searchList = [];  
+        //如果isFromSearch是true从data中取出数据，否则先从原来的数据继续添加  
+        that.data.isFromSearch ? searchList=res.data.data.order : searchList=that.data.orders.concat(res.data.data.order)  
+        console.log(searchList)
+        that.setData({  
+          orders:searchList,
+          searchLoading: false   //把"上拉加载"的变量设为false，显示 
+        });  
+      //没有数据了，把“没有数据”显示，把“上拉加载”隐藏  
+      }else{  
+        that.setData({  
+          searchLoadingComplete: true, //把“没有数据”设为true，显示  
+          searchLoading: false  //把"上拉加载"的变量设为false，隐藏  
+        });  
+      }  
+
+
+
+
+
+
         console.log(res.data.data)
-       that.setData({
-            orders:res.data.data.order,
-            showLoading: false,
-             showContent: true
-          })
+      
      
       }
     })

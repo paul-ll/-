@@ -32,10 +32,12 @@
         </view>
           <view class="add-tick">
             <block wx:for="{{goods.order.ticket_detail}}" wx:for-item="item" wx:for-index="index">
-            <view class="adult-price">
-                {{item.type}}：￥{{item.current_price}}
-            </view>
-           <text>{{item.num}}</text>张
+            <block wx:if="{{item.num}}">
+              <view class="adult-price ">
+                  {{item.type}}：￥{{item.current_price}}
+              </view>
+             <text>{{item.num}}</text>张
+             </block>
             </block>
         </view>
 
@@ -62,7 +64,7 @@
                 <view>
                   订单总价
                 </view>
-                <text>{{(goods.order.total-0)+(goods.order.freight-0)}}.00</text>
+                <text>{{(goods.order.total-0)+(goods.order.freight-0)}}</text>
             </view>
             <view class="add-price add_pay">
                 <view class="add_pay_name">
@@ -236,7 +238,7 @@
         <icon wx:else type="circle" size="20" />  -->
         <text>共计</text>
         <text>￥: {{goods.order.disbursements}}</text>
-        <text>{{goods.order.ticket_detail.length}}张</text>
+        <text>{{num}}张</text>
 
     </view>
     <view class="button" bindtap="bindCheckout">下一步</view>

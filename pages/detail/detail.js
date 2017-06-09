@@ -7,16 +7,22 @@ Page({
 		goods: {},
 		current: 0,
 		clock: '',
+		num:'',
 		total_micro_second:'',
 		showLoading: true,
 		showContent: false
 	},
 	onLoad: function(options) {
-		
+
 		var that=this;
 		var order_id = options.order_id;
-		douban.orderDetail.call(that,config.apiList.orderDetail,order_id);
 
+		var num = options.num;
+		
+		douban.orderDetail.call(that,config.apiList.orderDetail,order_id);
+		that.setData({
+			num:num
+		})
 
 
 

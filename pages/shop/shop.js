@@ -408,6 +408,9 @@ console.log(stringTime + "的时间戳为：" + timestamp2);
 		var address = e.currentTarget.dataset.address;
 		var carts = e.currentTarget.dataset.carts;
 		var event_id = e.currentTarget.dataset.event_id;
+		for(var i = 0;i<tickets.length;i++){
+			tickets[i].num = carts[i];
+		}
 		console.log(tickets)
 		console.log(carts)
 		console.log(total)

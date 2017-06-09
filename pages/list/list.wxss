@@ -118,3 +118,25 @@ display:inline-block;
 	color: #FF5454;
 	line-height: 14px;
 }
+
+.loading{  
+  padding: 10rpx;  
+  text-align: center;  
+}  
+.loading:before{  
+  display: inline-block;  
+  margin-right: 5rpx;  
+  vertical-align: middle;  
+  content: '';  
+  width: 40rpx;  
+  height: 40rpx;  
+
+  animation: rotate 1s linear infinite;  
+}  
+.loading.complete:before{  
+  display: none;  
+}  
+.complete{
+	margin:0 auto;
+	text-align:center;
+}
