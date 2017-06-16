@@ -1,4 +1,4 @@
-var douban = require('../../comm/script/fetch')
+var youyan = require('../../comm/script/fetch')
 var config = require('../../comm/script/config')
 var util = require('../../util/util')
 var app = getApp();
@@ -28,7 +28,7 @@ Page({
 		var that = this;
 		console.log(that.data.uid)
 		console.log(that.data.address_arr)
-	 douban.getAddressList.call(that,config.apiList.getAddressList,that.data.uid);
+	 youyan.getAddressList.call(that,config.apiList.getAddressList,that.data.uid);
 	 
 	},
 	setDefault: function (e) {
@@ -72,7 +72,7 @@ Page({
 	
 		console.log(addressObjects[index])
 		console.log(that.data.uid)
- douban.setDefaultAddress.call(that,config.apiList.setDefaultAddress,data_id,that.data.uid);
+ youyan.setDefaultAddress.call(that,config.apiList.setDefaultAddress,data_id,that.data.uid);
 
 		// 提交网络更新该用户所有的地址
 		// AV.Object.saveAll(addressObjects).then(function (addressObjects) {

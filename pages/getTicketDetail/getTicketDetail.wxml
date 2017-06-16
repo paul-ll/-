@@ -1,6 +1,6 @@
 <view class="tab-content-item">
-    <view class="favorite-film-item" data-id="{{getTicketDetail.id}}" bindtap="viewgetTicketDetail">
-        <image class="favorite-film-cover" src="{{getTicketDetail.end_image}}"></image>
+    <view class="favorite-film-item">
+        <image class="favorite-film-cover" src="{{getTicketDetail.event_image}}"></image>
         <view class="favorite-film-info">
             <view class="favorite-film-txt favorite-film-title">
                 {{getTicketDetail.event_name}}
@@ -67,7 +67,7 @@
  	<view class="pay_num">
  		订单号:
  		
- 		<text>{{getTicketDetail.ticket_num}}</text>
+ 		<text>{{getTicketDetail.order_num}}</text>
  	</view>
 
  	<view class="pay_mon">

@@ -1,4 +1,4 @@
-var douban = require('../../comm/script/fetch')
+var youyan = require('../../comm/script/fetch')
 var config = require('../../comm/script/config')
 var util = require('../../util/util')
 var app = getApp();
@@ -21,23 +21,29 @@ Page({
     // tab切换  
     currentTab: 0,  
     suid:0,
-    uid:0,
+    uid:'',
     p:1,
     data_arr:[],
-    feedlist_arr:[]
+    feedlist_arr:[],
+    follow:'关注+'
   },
   onLoad:function(option){
     var that = this;
     that.setData({
-      suid:option.suid
+      suid:option.suid,
     })
   },
   onShow:function(){
     var that = this;
-		douban.getEventList.call(that,config.apiList.getEventList,that.data.suid,that.data.p);
-    douban.getFeedList.call(that,config.apiList.getFeedList,that.data.suid,that.data.p);
-    douban.getUserProfile.call(that,config.apiList.getUserProfile,that.data.uid,that.data.suid);
-    // douban.getAddressList.call(that,config.apiList.getAddressList,that.data.uid);
+    var uid = wx.getStorageSync('uid');
+        that.setData({
+          uid:uid
+        })
+
+		youyan.getEventList.call(that,config.apiList.getEventList,that.data.suid,that.data.p);
+    youyan.getFeedList.call(that,config.apiList.getFeedList,that.data.suid,that.data.p);
+    youyan.getUserProfile.call(that,config.apiList.getUserProfile,that.data.uid,that.data.suid);
+    // youyan.getAddressList.call(that,config.apiList.getAddressList,that.data.uid);
     
     wx.getStorage({
       key: 'skin',
@@ -63,17 +69,13 @@ Page({
       wx.stopPullDownRefresh()
     })
   },
-  viewGridDetail: function(e) {
-    var data = e.currentTarget.dataset
-    console.log(data.url);
-		wx.navigateTo({
-			url: "../" + data.url + '/' + data.url
-		})
-  },
-  viewSkin: function() {
-		wx.navigateTo({
-			url: "../skin/skin"
-		})
+  // 活动
+  auterEvent:function(e){
+       var data = e.currentTarget.dataset;
+       var event_id = data.event_id;
+       wx.redirectTo({
+        url: "../eventInfo/eventInfo?event_id="+event_id
+      })
   },
   /** 
      * 滑动切换tab 
@@ -84,6 +86,33 @@ Page({
     that.setData( { currentTab: e.detail.current });  
   
   },  
+  // 关注
+  doFollow:function(e){
+    var that = this;
+    var data = e.currentTarget.dataset;
+    var value = e.currentTarget.dataset.value.replace(/(^\s*)|(\s*$)/g, "");
+      var uid = wx.getStorageSync('uid');
+      console.log(uid)
+      var parse_uid = parseInt(uid);
+       console.log(that.data.suid)
+       var parse_suid = parseInt(that.data.suid)
+      if(uid == ''){
+        wx.navigateTo({
+            url: "../login/login"
+          })
+        that.onShow();
+      }else{
+        if(value == '关注+'){
+          console.log('关注')
+            youyan.doFollow.call(that,config.apiList.doFollow,parse_uid,parse_suid);
+        }else{
+          console.log('取消')
+          youyan.unFollow.call(that,config.apiList.unFollow,parse_uid,parse_suid);
+        }
+        
+      }
+
+  },
   /** 
    * 点击tab切换 
    */  

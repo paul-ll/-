@@ -1,4 +1,4 @@
-var douban = require('../../comm/script/fetch')
+var youyan = require('../../comm/script/fetch')
 var util = require('../../util/util')
 var config = require('../../comm/script/config')
 Page({
@@ -76,7 +76,7 @@ Page({
        	  that.setData({
 		   	uid:uid
 		   })
-       	 douban.getTicketDelivery.call(that, config.apiList.getTicketDelivery, event_id,uid)
+       	 youyan.getTicketDelivery.call(that, config.apiList.getTicketDelivery, event_id,uid)
        
 
 
@@ -85,7 +85,7 @@ Page({
        
 
 
-		// douban.getActiveinfo.call(that, config.apiList.active_info, id, site,function(data){
+		// youyan.getActiveinfo.call(that, config.apiList.active_info, id, site,function(data){
 		// 	/// 判断是否收藏
 		// 	wx.getStorage({
 		// 	key: 'film_favorite',
@@ -335,7 +335,7 @@ Page({
    		current_price+=(parseFloat(that.data.tickets[i].current_price)*parseFloat(page_arr[i]));
    }  
 
-cut_pic = original_price - current_price;
+// cut_pic = original_price - current_price;
 
 var event_id = parseInt(that.data.event_id);
 console.log(that.data.uid)
@@ -348,11 +348,11 @@ console.log(that.data.games_obj.start_time)
 console.log(that.data.games_obj.end_time)
 var page = parseInt(that.data.page);
 console.log(page)
-var total_up = original_price*100;
+var total_up = current_price*100;
 console.log(total_up)
 var postage_up = parseInt(that.data.postage*100);
 console.log(postage_up)
-var cut_pic_up = parseInt(cut_pic*100);
+var cut_pic_up =0;
 console.log(cut_pic_up)
 var all_num_up = parseInt(that.data.all_num*100);
 console.log(all_num_up)
@@ -366,7 +366,7 @@ var address_info = (that.data.address_arr.province+that.data.address_arr.city+th
 
 
 
-douban.submitOrder.call(that, config.apiList.submitOrder, event_id, that.data.uid, games_id,that.data.name,that.data.address,that.data.time,that.data.games_obj.start_time,that.data.games_obj.end_time,page,total_up, postage_up, cut_pic_up, all_num_up,tickets,that.data.ship_type_num,that.data.userN,that.data.phoneN,address_info,'1')
+youyan.submitOrder.call(that, config.apiList.submitOrder, event_id, that.data.uid, games_id,that.data.name,that.data.address,that.data.time,that.data.games_obj.start_time,that.data.games_obj.end_time,page,total_up, postage_up, cut_pic_up, all_num_up,tickets,that.data.ship_type_num,that.data.userN,that.data.phoneN,address_info,'1')
 
 
 
@@ -423,7 +423,7 @@ var address_info = (that.data.address_arr.province+that.data.address_arr.city+th
 
 
 
-douban.submitOrder.call(that, config.apiList.submitOrder, event_id, that.data.uid, games_id,that.data.name,that.data.address,that.data.time,that.data.games_obj.start_time,that.data.games_obj.end_time,page,total_up, postage_up, cut_pic_up, all_num_up,tickets,that.data.ship_type_num,that.data.userN,that.data.phoneN,address_info,'1')
+youyan.submitOrder.call(that, config.apiList.submitOrder, event_id, that.data.uid, games_id,that.data.name,that.data.address,that.data.time,that.data.games_obj.start_time,that.data.games_obj.end_time,page,total_up, postage_up, cut_pic_up, all_num_up,tickets,that.data.ship_type_num,that.data.userN,that.data.phoneN,address_info,'1')
 
 
 

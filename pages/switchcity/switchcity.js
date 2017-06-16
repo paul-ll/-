@@ -1,4 +1,4 @@
-var douban = require('../../comm/script/fetch')
+var youyan = require('../../comm/script/fetch')
 var config = require('../../comm/script/config')
 var app = getApp()
 Page({
@@ -29,7 +29,7 @@ Page({
   onShow: function () {
     // 生命周期函数--监听页面显示
     var that = this;
-    douban.getCityList.call(that,config.apiList.getCityList)
+    youyan.getCityList.call(that,config.apiList.getCityList)
 
 
 
@@ -80,14 +80,15 @@ Page({
   //直接调用上一个页面的setData()方法，把数据存到上一个页面中去
   
  prevPage.setData({
-    area_id:e.currentTarget.dataset.area_id
+    area_id:e.currentTarget.dataset.area_id,
+    eventList:[],
+    p:1
   })
-
-  prevPage.onShow();
 
   prevPage.setData({
       city: e.currentTarget.dataset.city,
     })
+   prevPage.onShow();
    wx.navigateBack(); 
   },
   //点击热门城市回到顶部

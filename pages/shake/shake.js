@@ -1,6 +1,6 @@
 var util = require('../../util/util')
 var config = require('../../comm/script/config')
-var douban = require('../../comm/script/fetch')
+var youyan = require('../../comm/script/fetch')
 
 // 重力感应参数
 var SHAKE_THRESHOLD = 200
@@ -106,11 +106,11 @@ Page({
     }
     function getPopular() {
       // 获取热映列表
-      douban.fetchFilms.call(that, config.apiList.popular, start, count, function(data){ getComming() }, done)
+      youyan.fetchFilms.call(that, config.apiList.popular, start, count, function(data){ getComming() }, done)
     }
     function getComming() {
       // 获取待映列表
-      douban.fetchFilms.call(that, config.apiList.coming, start, count, done, done)
+      youyan.fetchFilms.call(that, config.apiList.coming, start, count, done, done)
     }
   },
   saveData: function(data) {

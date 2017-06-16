@@ -74,6 +74,7 @@
             </view>
       </view>
 
+
         <!--  出票成功 -->
       <view class="{{goods.order.order_status != 4 ? 'hidden': ''}} goods_tick">
           <view class="{{goods.event.type != 1 ? 'hidden': ''}} goods_list">
@@ -81,7 +82,8 @@
                 <view class="add_price_name">
                   入场方式
                 </view>
-                <text>{{goods.order.examine_type}}</text>
+                <text class="{{goods.order.examine_type != 2 ? 'hidden': ''}} ">实体票</text>
+                <text class="{{goods.order.examine_type != 1 ? 'hidden': ''}} ">电子票</text>
               </view>
               <view class="add_price">
                 <view class="add_price_name">
@@ -102,7 +104,7 @@
                 <view class="add_price_name">
                   入场方式
                 </view>
-                 <text class="{{goods.order.examine_type != 2 ? 'hidden': ''}} ">实体票</text>
+                <text class="{{goods.order.examine_type != 2 ? 'hidden': ''}} ">实体票</text>
                 <text class="{{goods.order.examine_type != 1 ? 'hidden': ''}} ">电子票</text>
                
               </view>
@@ -133,6 +135,7 @@
               </view>
           </view>
       </view>
+
         <!--  报名成功，待审核 -->
        <view class="{{goods.order.order_status != 6 ? 'hidden': ''}} goods_tick">
             <view class="{{goods.event.type != 1 ? 'hidden': ''}} goods_list">
@@ -157,12 +160,13 @@
           </view>
       </view>
         <view class="{{goods.order.order_status != 1 ? 'hidden': ''}} goods_tick">
-            <view class="{{goods.event.type != 1 ? 'hidden': ''}} goods_list">
+            
               <view class="add_price">
                 <view class="add_price_name">
                   入场方式
                 </view>
-                <text>{{goods.order.examine_type}}</text>
+                <text class="{{goods.order.examine_type != 2 ? 'hidden': ''}} ">实体票</text>
+                <text class="{{goods.order.examine_type != 1 ? 'hidden': ''}} ">电子票</text>
               </view>
               <view class="add_price">
                 <view class="add_price_name">
@@ -176,15 +180,46 @@
                 </view>
                 <text>{{goods.order.contact_phone}}</text>
               </view>
-          </view>
+              <view class="{{goods.order.examine_type != 2 ? 'hidden': ''}} goods_list">
+                <view class="add_price">
+                  <view class="add_price_name">
+                    收货地址
+                  </view>
+                  <text>{{goods.order.shipping_address}}</text>
+                </view>
+              </view>
+
+          <view class="pay_way">
+        <text class="check_way">支付方式</text>
+        <view class="check_pay">
+          <view class="check_flex">
+              <image class="weixin_img" src="../../dist/images/weixin_log.png" ></image>
+              <text class="pay_text">微信</text>
+           </view>
+         <!-- <checkbox-group bindchange="checkboxChange">
+           <label class="checkbox">
+           
+           <checkbox value="1"/>
+           </label>
+          </checkbox-group> -->
+        </view>
+      </view> 
+      <view class="footer">
+      <view class="pay_mon">
+      共计<text>￥{{goods.order.disbursements}} ({{num}}张)</text></view>
+          <view class="button" data-order_num="{{goods.order.order_num}}" data-pay_type="{{goods.order.pay_type}}" data-start_date="{{start_date}}" 
+          bindtap="pay_order">下一步</view>
       </view>
-       <view class="{{goods.order.order_status != 3 ? 'hidden': ''}} goods_tick">
-            <view class="{{goods.event.type != 1 ? 'hidden': ''}} goods_list">
+
+      </view>
+       <view class="{{goods.order.order_status != 9 ? 'hidden': ''}} goods_tick">
+            
               <view class="add_price">
                 <view class="add_price_name">
                   入场方式
                 </view>
-                <text>{{goods.order.examine_type}}</text>
+                <text class="{{goods.order.examine_type != 2 ? 'hidden': ''}} ">实体票</text>
+                <text class="{{goods.order.examine_type != 1 ? 'hidden': ''}} ">电子票</text>
               </view>
               <view class="add_price">
                 <view class="add_price_name">
@@ -198,17 +233,28 @@
                 </view>
                 <text>{{goods.order.contact_phone}}</text>
               </view>
-          </view>
+                <view class="add_price">
+                  <view class="add_price_name">
+                    收货地址
+                  </view>
+                  <text>{{goods.order.shipping_address}}</text>
+                </view>
+
+              <view class="{{goods.order.examine_type != 2 ? 'hidden': ''}} goods_list">
+                <view class="add_price">
+                  <view class="add_price_name">
+                    支付方式
+                  </view>
+                  <text class="{{goods.order.pay_type != 1 ? 'hidden': ''}} ">微信支付</text>
+                  <text class="{{goods.order.pay_type != 2 ? 'hidden': ''}} ">支付宝支付</text>
+                </view>
+
+              </view>
       </view>
-
-
-        
-
-
 
 
       <!--支付方式 -->
-      <view class="pay_way">
+     <!-- <view class="pay_way">
         <text class="check_way">支付方式</text>
         <view class="check_pay">
           <view class="check_flex">
@@ -222,7 +268,7 @@
            </label>
           </checkbox-group>
         </view>
-      </view>
+      </view>  -->
 
        
         
@@ -231,15 +277,14 @@
 <import src="../../component/message/message.wxml"/>
 <template is="message" data="{{message: message}}"/>
 
-<view class="footer"></view>
+<!-- <view class="footer"></view>
 <view class="carts-footer">
     <view bindtap="bindSelectAll">
-       <!-- <icon wx:if="{{selectedAllStatus}}" type="success_circle" size="20"/>
-        <icon wx:else type="circle" size="20" />  -->
+      
         <text>共计</text>
         <text>￥: {{goods.order.disbursements}}</text>
         <text>{{num}}张</text>
 
     </view>
     <view class="button" bindtap="bindCheckout">下一步</view>
-</view>
+</view>  -->

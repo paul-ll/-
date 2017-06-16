@@ -225,8 +225,14 @@ function loginByThird(url,platform,openid,access_token){
           pcount:pcount
         }),
         success: function(res){
-        console.log(res.data.data)
-        listName = res.data.data.selection;
+       if(res.data.data.selection.length > 0){
+       
+         
+          var eventList = [];  
+        //如果isFromSearch是true从data中取出数据，否则先从原来的数据继续添加  
+        that.data.eventList ? eventList=res.data.data.selection : eventList=that.data.eventList.concat(res.data.data.selection)  
+        console.log(eventList)
+         listName = eventList;
         for(var i =0;i<listName.length;i++){
           lat.push(listName[i].lat);
           lon.push(listName[i].lon)
@@ -252,13 +258,22 @@ function loginByThird(url,platform,openid,access_token){
           wx.showModal({title:info.errMsg})
         }
       })
+        
+      //没有数据了，把“没有数据”显示，把“上拉加载”隐藏  
         that.setData({
-          eventList:res.data.data,
+          eventList:eventList,
           lat:lat,
           lon:lon,
-           showLoading: false,
-            hasMore: false,
+          showLoading: false,
+          hasMore: false,
+          searchLoading: false   //把"上拉加载"的变量设为false，显示 
         })
+     }else{  
+            that.setData({  
+              searchLoadingComplete: true, //把“没有数据”设为true，显示  
+              searchLoading: false  //把"上拉加载"的变量设为false，隐藏  
+            });  
+          }  
         }
       })
     }
@@ -278,7 +293,7 @@ function loginByThird(url,platform,openid,access_token){
         "Content-Type": "application/x-www-form-urlencoded",
        "Content-type": "application/json",
        "system" : "android",
-       "version" : "2.0"
+       "version" : "3.0"
       },
       success: function(res){
       
@@ -304,8 +319,23 @@ function loginByThird(url,platform,openid,access_token){
       },
       success: function(res){
         var uid = wx.getStorageSync('uid');
-        console.log(res.data.data)
+        console.log(res.data)
+        if(res.data.error_code != 0){
+            wx.showToast({
+              title: res.data.error_msg,
+              icon: 'loading',
+              duration: 1000,
+              success:function(){
+                wx.navigateBack()
+              }
+            });
+
+            
+        }else{
+
+        
           collectArr=res.data.data.collection;
+
         for(var i = 0;i<collectArr.user.length;i++){
             arr_list.push(collectArr.user[i].uid)
            if(collectArr.user[i].uid==uid){
@@ -315,8 +345,6 @@ function loginByThird(url,platform,openid,access_token){
            }
           }
 
-
-  
     var now_date_time=util.getDate()+' '+util.getTime()
     var now_data=parseInt(that.js_strto_time(now_date_time));
     console.log(now_data)
@@ -342,9 +370,60 @@ function loginByThird(url,platform,openid,access_token){
     
  
       }
+
+      }
     })
    
   }
+
+  // 所属分类活动列表
+  function getCategoryDetailList(url,cid,area_id,p,pcount){
+      var that = this
+    var listName = [];
+    
+     wx.request({
+        url: url,
+      method: 'GET', 
+      data: {
+       cid: cid,
+       area_id: area_id,
+       p: p,
+       pcount: pcount,
+       }, 
+      header: {
+        "Content-Type": "application/x-www-form-urlencoded",
+       "Content-type": "application/json",
+      },
+      success: function(res){
+        console.log(res.data.data)
+         if(res.data.data.event.length > 0){
+       
+         console.log(333)
+          var eventList = [];  
+        //如果isFromSearch是true从data中取出数据，否则先从原来的数据继续添加  
+        that.data.eventList ? eventList=res.data.data.event : eventList=that.data.eventList.concat(res.data.data.event)  
+        console.log(eventList)
+         that.setData({
+          eventList:eventList,
+          showLoading: false,
+          hasMore: false,
+          searchLoading: false   //把"上拉加载"的变量设为false，显示 
+        })
+     }else{  
+            that.setData({  
+              searchLoadingComplete: true, //把“没有数据”设为true，显示  
+              searchLoading: false  //把"上拉加载"的变量设为false，隐藏  
+            });  
+          }  
+
+      
+      // that.setData({
+      //   cityStr :res.data.data.area
+      // })
+      }
+    })
+  }
+
 
   // 盐场-添加收藏
    function addCollection(url,sid,uid,type){
@@ -389,18 +468,74 @@ function loginByThird(url,platform,openid,access_token){
         type:type
       }), 
       header: {
+         "Content-Type":"application/json",
         "Content-Type": "application/x-www-form-urlencoded"
       },
       success: function(res){
         console.log(res.data.data)
       
         }
-      
-     
-     
     })
 
    }
+
+   // 添加关注
+  function doFollow(url,uid,suid){
+    var that = this;
+    message.hide.call(that)
+     wx.request({
+        url: url,
+      method: 'POST', 
+      data: util.json2Form( { 
+        uid:uid,
+        suid: suid
+      }), 
+      header: {
+        "Content-type": "application/json",
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      success: function(res){
+        console.log(res.data.data)
+        that.setData({
+          follow:"取消关注"
+        })
+      
+        }
+    })
+
+  }
+
+  // 取消关注
+  function unFollow(url,uid,suid){
+    var that = this;
+    message.hide.call(that)
+     wx.request({
+        url: url,
+      method: 'POST', 
+      data: util.json2Form( { 
+        uid:uid,
+        suid: suid
+      }), 
+      header: {
+        "Content-type": "application/json",
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      success: function(res){
+        console.log(res.data.data)
+        that.setData({
+          follow:"关注+"
+        })
+      
+        }
+    })
+  }
+
+
+  // 获取用户关注列表
+  // function getFollowingList(url,suid,p,pcount){
+    
+
+  // }
 
     // 获取活动场次和票种
      function getGamesTicket(url,event_id){
@@ -419,9 +554,7 @@ function loginByThird(url,platform,openid,access_token){
        "version" : "2.0"
       },
       success: function(res){
-        console.log(res.data)
         var today = new Date();//当前时间 
-        console.log(today) 
         var y=[] ;//年  
         var mon=[] ;//月  
         var d=[] ;//日  
@@ -435,8 +568,7 @@ function loginByThird(url,platform,openid,access_token){
             d.push(data_arr[i].day);
         }
         for(var j=0;j<y.length;j++){
-          s.push(y[j]+'-'+that.p(mon[j]))
-          
+          s.push(y[j]+'-'+that.p(mon[j]))  
         }
         for(var k=0;k<d.length;k++){
 
@@ -445,19 +577,11 @@ function loginByThird(url,platform,openid,access_token){
             }
            
           }
-        
-      console.log(arr_date)
       var mon_num=parseInt(that.p(mon[0]));
-      console.log(mon[0])
       var year_num = parseInt(y[0]);
-      console.log(y[0])
 
  var now_time = new Date(arr_date[0]);//星期 
- console.log(arr_date[0])
- console.log(new Date(now_time))
  var u = now_time.getDay()
- 
- console.log(u)
        that.setData({
             option_date:arr_date,
             selectedDate:arr_date[0],
@@ -478,12 +602,10 @@ function loginByThird(url,platform,openid,access_token){
 
 
 
-  console.log(first_monday)
   var stringTime = first_monday;
   var timestamp2 = Date.parse(new Date(stringTime));
   timestamp2 = timestamp2 / 1000;
 
-  console.log(stringTime + "的时间戳为：" + timestamp2);
      getGamesTicketByDate.call(that, config.apiList.getGamesTicketByDate,that.data.event_id,timestamp2)
 
 
@@ -507,9 +629,7 @@ function loginByThird(url,platform,openid,access_token){
       }, 
       header: {
         "Content-Type": "application/x-www-form-urlencoded",
-        "Content-type": "application/json",
-        "system" : "android",
-        "version" : "2.0"
+        "Content-type": "application/json"
       },
       success: function(res){
       console.log(res.data.data);
@@ -651,8 +771,14 @@ getTicketByGames.call(that, config.apiList.getTicketByGames,event_id,res.data.da
         console.log(res)
         var obj = res.data.data;
         var d = app.globalData;
-       
-        wx.requestPayment({
+        console.log(d.appid)
+
+        wx.login({
+      success: function(res) {
+        if (res.code) {
+          console.log(res.code)
+          //发起网络请求
+         wx.requestPayment({
           'appId' : d.appid,
           'timeStamp': (obj.timestamp).toString(),
           'nonceStr': obj.noncestr,
@@ -672,10 +798,15 @@ getTicketByGames.call(that, config.apiList.getTicketByGames,event_id,res.data.da
         }
       });
 
+        } else {
+          console.log('获取用户登录态失败！' + res.errMsg)
+        }
+      }
+    });
 
 
+        
 
-       
       }
     })
     
@@ -951,7 +1082,7 @@ function setDefaultAddress(url,id,uid){
 
        
       if(res.data.data.order.length > 0){  
-        let searchList = [];  
+        var searchList = [];  
         //如果isFromSearch是true从data中取出数据，否则先从原来的数据继续添加  
         that.data.isFromSearch ? searchList=res.data.data.order : searchList=that.data.orders.concat(res.data.data.order)  
         console.log(searchList)
@@ -1137,6 +1268,19 @@ function setDefaultAddress(url,id,uid){
       // },
       success: function(res){
         console.log(res.data.data)
+        if(res.data.data !=undefined){
+          if(res.data.data.follow_status=='0'){
+            that.setData({
+              follow:'关注+'
+            })
+          }else{
+            that.setData({
+              follow:'取消关注'
+            })
+          }
+        }
+        
+
        that.setData({
             myInfo_arr:res.data.data,
             showLoading: false,
@@ -1373,6 +1517,9 @@ module.exports = {
   orderPay:orderPay,
   Event:Event,
   User:User,
+  doFollow:doFollow,
+  unFollow:unFollow,
+  getCategoryDetailList:getCategoryDetailList,
 
 
 

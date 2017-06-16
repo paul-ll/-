@@ -6,7 +6,15 @@
 			<text class="mobile">{{item.phone}}</text>
 		</view>
 		<!-- second row -->
-		<view class="summary">{{item.province}}{{item.city}}{{item.county}}</view>
+		<view class="summary">
+			<block wx:if="{{item.province == item.city}}">
+				{{item.city}} {{item.county}} {{item.address}}
+			</block>
+			<block wx:else>
+				{{item.province}} {{item.city}} {{item.county}} {{item.address}}
+			</block>
+			
+		</view>
 		<!-- third row -->
 		<view class="footer">
 			<!-- is default switch -->

@@ -509,17 +509,13 @@ padding-top:30rpx;
 }
 .pay_mon {
     box-sizing: border-box;
-    padding: 10rpx 30rpx;
+    padding: 10rpx 10rpx;
     padding-left: 60rpx;
     font-size: 32rpx;
     line-height:70rpx;
    font-family: PingFangSC-Regular;
    
 }
-.pay_mon text{
- margin-left:10px;
-}
-
 
 .button{
     text-align:center;
@@ -527,7 +523,7 @@ padding-top:30rpx;
     height:20px;
     margin-top:10px;
     color:#fff;
-    padding:2px 60px;
+    padding:2px 40px;
     background: #0047FF;
     box-shadow: 0 2px 4px 0 #4D7BFF;
     border-radius: 2px;

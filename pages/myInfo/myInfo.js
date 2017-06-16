@@ -1,4 +1,4 @@
-var douban = require('../../comm/script/fetch')
+var youyan = require('../../comm/script/fetch')
 var config = require('../../comm/script/config')
 var util = require('../../util/util')
 var app = getApp();
@@ -30,10 +30,11 @@ Page({
     var uid = wx.getStorageSync('uid');
     var suid = wx.getStorageSync('suid');
 that.setData({
-          userInfo: user.data
+          userInfo: user.data,
+          uid:uid
       })
 
-    douban.getUserProfile.call(that,config.apiList.getUserProfile,uid,suid);
+    youyan.getUserProfile.call(that,config.apiList.getUserProfile,uid,suid);
 
     
     wx.getStorage({

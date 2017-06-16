@@ -1,5 +1,5 @@
 // pages/login/login.js
-var douban = require('../../comm/script/fetch')
+var youyan = require('../../comm/script/fetch')
 var util = require('../../util/util')
 var config = require('../../comm/script/config')
 var app = getApp()
@@ -31,7 +31,6 @@ Page({
   userPassword:'',
   winWidth: 0,  
   winHeight: 0,  
-  // tab切换  
   currentTab: 0,
   phone:'' ,
   reg_code:'',
@@ -76,14 +75,7 @@ var password = data.userPassword;
      return false;
     }
 
- douban.loginByPhone.call(that, config.apiList.loginByPhone,mobile,password)
-
-// wx.navigateTo({
-//     url: '../shop/shop'
-//    })
-
-
-
+ youyan.loginByPhone.call(that, config.apiList.loginByPhone,mobile,password)
   //获得表单数据
   var objData = e.detail.value;
 
@@ -139,14 +131,7 @@ var reg_code = data.reg_code;
      return false;
     }
 
- douban.doRegister.call(that, config.apiList.doRegister,mobile,reg_code,password,that.data.code_id)
-
-// wx.navigateTo({
-//     url: '../shop/shop'
-//    })
-
-
-
+ youyan.doRegister.call(that, config.apiList.doRegister,mobile,reg_code,password,that.data.code_id)
   //获得表单数据
   var objData = e.detail.value;
 
@@ -195,7 +180,7 @@ var reg_code = data.reg_code;
             selected1:false,
         });
       countdown(that);
-  douban.sendSmsCode.call(that, config.apiList.sendSmsCode,mobile)
+  youyan.sendSmsCode.call(that, config.apiList.sendSmsCode,mobile)
     console.log(that.data.phone)
  },
  
@@ -212,16 +197,95 @@ var reg_code = data.reg_code;
   var code = wx.getStorageSync('code');
 
   var platform = that.data.platform;
-
+  var obj = wx.getStorageSync('user');
    var obj_token = wx.getStorageSync('obj_token');
+    console.log(obj)
   console.log(obj_token)
   console.log(platform)
 
-   
+  wx.showModal({
+  title: '微信登录',
+  content: '是否同意获取用户信息？',
+  success: function(res) {
+    if (res.confirm) {
+      wx.getSetting({
+  success: (red) => {
+    if(!red.authSetting["scope.userInfo"] || !red.authSetting["scope.userLocation"]){
+      wx.openSetting({
+          success: (res) => {
+            /*
+             * res.authSetting = {
+             *   "scope.userInfo": true,
+             *   "scope.userLocation": true
+             * }
+             */
+            if(!res.authSetting["scope.userInfo"] || !res.authSetting["scope.userLocation"]){
+               console.log(545)
+            }else{
+              wx.login({
+                success: function (res) {
+                    if(res.code) {  
+                        wx.getUserInfo({  
+                            success: function (res) {  
+                                var objz={};  
+                                objz.avatarUrl=res.userInfo.avatarUrl;  
+                                objz.nickName=res.userInfo.nickName;  
+                                console.log(objz);  
+                                wx.setStorageSync('userInfo', objz);//存储userInfo  
+                            }  
+                        });  
+                      }
+                   
+               
+                    }
+
+                })
+            }
+          }
+        })
+    }else{
+        wx.login({
+          success: function (res) {
+              if(res.code) {  
+                  wx.getUserInfo({  
+                      success: function (res) {  
+                          var objz={};  
+                          objz.avatarUrl=res.userInfo.avatarUrl;  
+                          objz.nickName=res.userInfo.nickName;  
+                          console.log(objz);  
+                          wx.setStorageSync('userInfo', objz);//存储userInfo  
+                      }  
+                  });  
+                }
+             
+         
+              }
+
+          })
+        }
+        /*
+         * res.authSetting = {
+         *   "scope.userInfo": true,
+         *   "scope.userLocation": true
+         * }
+         */
+      }
+    })
+       
+    } else if (res.cancel) {
+      console.log('用户点击取消')
+    }
+  }
+
+})
 
 
-   
-  douban.loginByThird.call(that,config.apiList.loginByThird,platform,obj_token.openid,obj_token.access_token)
+
+         
+
+  
+  
+  // youyan.loginByThird.call(that,config.apiList.loginByThird,platform,obj.openid,obj_token.access_token)
    
  },
  //加载完后，处理事件 

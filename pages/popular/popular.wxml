@@ -1,3 +1,4 @@
+<scroll-view  style="height: {{windowHeight}}px; width: {{windowWidth}}px;" scroll-y="true" bindscrolltoupper="pullDownRefresh" bindscrolltolower="pullUpLoad" >
 <view class="all_page">
 <block wx:if="{{! showLoading}}">
 <view class="headerPop">
@@ -18,22 +19,22 @@
     </block>
 </swiper>
 
-<scroll-view scroll-x="true" style=" white-space: nowrap; display: flex" >
-<view class="banner_list">
-  <block wx:for="{{bannerList.cate}}" wx:for-item="cateItem" wx:key="cate">
-    <view class="banner_li" data-cid="{{cateItem.cid}}">
-      <image class="banner_img" src="{{cateItem.icon}}"></image>
-      <view class="banner_name">{{cateItem.name}}</view>
-    </view>
-  </block>
-</view>
-</scroll-view>
+<!-- <scroll-view scroll-x="true" style=" white-space: nowrap; display: flex" > -->
+  <view class="banner_list">
+    <block wx:for="{{bannerList.cate}}" wx:for-item="cateItem" wx:key="cate">
+      <view class="banner_li" data-cid="{{cateItem.cid}}" data-list="{{bannerList.cate}}" data-area_id="{{area_id}}" bindtap="eventAll">
+        <image class="banner_img" src="{{cateItem.icon}}"></image>
+        <view class="banner_name">{{cateItem.name}}</view>
+      </view>
+    </block>
+  </view>
+ <!-- </scroll-view> -->
 
 <!-- 活动详情 -->
 <view class="event_info">
   <view class="event_title">有盐精选</view>
   <view class="event_text">实时实地推荐最适合你的活动</view> 
-<block wx:for="{{eventList.selection}}" wx:for-item="eventItem" wx:key="event" wx:for-index="index">
+<block wx:for="{{eventList}}" wx:for-item="eventItem" wx:key="event" wx:for-index="index">
   <view class="event_main" data-event_id="{{eventItem.event_id}}" bindtap="viewEnentInfo">
     <image class="event_img" src="{{eventItem.image}}"></image>
     <view class="event_body">
@@ -79,8 +80,7 @@
 
 </block>
 </view>
-<import src="../../component/filmList/filmList.wxml"/>
-<template is="filmList" data="{{films: films, hasMore: hasMore, showLoading: showLoading}}"/>
-<import src="../../component/message/message.wxml"/>
-<template is="message" data="{{message: message}}"/>
+<view class="loading" hidden="{{!searchLoading}}">正在载入更多...</view>  
+<view class="complete" hidden="{{!searchLoadingComplete}}">已加载全部</view> 
+</scroll-view>
 

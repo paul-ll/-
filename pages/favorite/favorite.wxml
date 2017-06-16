@@ -25,7 +25,7 @@
                         <view class="favorite-film-txt">
                             {{filmFavoriteItem.event_address}}
                         </view>
-                        <view class="favorite-film-txt">豆瓣评分：
+                        <view class="favorite-film-txt">
                             <block wx:if="{{filmFavoriteItem.ticket_stat == 1}}">
                                 已验票
                             </block>
@@ -68,7 +68,7 @@
                                 {{personFavoriteItem.event_address}}
                               
                         </view>
-                        <view class="favorite-film-txt">豆瓣评分：
+                        <view class="favorite-film-txt">
                             <block wx:if="{{personFavoriteItem.ticket_stat == 1}}">
                                 已验票
                             </block>

@@ -1,4 +1,4 @@
-var douban = require('../../comm/script/fetch')
+var youyan = require('../../comm/script/fetch')
 var config = require('../../comm/script/config')
 Page({
 	data: {
@@ -19,29 +19,27 @@ Page({
 		that.setData({
 			uid:uid
 		})
-		douban.getCollection.call(that, config.apiList.getCollection,that.data.uid,that.data.type,that.data.p, that.data.pcount)
+		
+	},
+	onShow: function(){
+		var that = this;
+		youyan.getCollection.call(that, config.apiList.getCollection,that.data.uid,that.data.type,that.data.p, that.data.pcount)
 	},
 	onPullDownRefresh: function() {
 		var that = this
-		that.setData({
-			films: [],
-			currentTab: 0,
-			hasMore: true,
-			showLoading: true,
-			start: 0
-		})
+		that.onShow()
 		
 	},
 	onReachBottom: function() {
 		var that = this
 		// if (!that.data.showLoading) {
-		// 	douban.fetchFilms.call(that, config.apiList.coming, config.city, that.data.start, config.count)
+		// 	youyan.fetchFilms.call(that, config.apiList.coming, config.city, that.data.start, config.count)
 		// }
 	},
-	viewFilmDetail: function(e) {
+	enterEvent:function(e){
 		var data = e.currentTarget.dataset;
 		wx.navigateTo({
-			url: "../filmDetail/filmDetail?id=" + data.id
+			url: "../eventInfo/eventInfo?event_id=" + data.event_id
 		})
 	},
 	viewFilmByTag: function(e) {

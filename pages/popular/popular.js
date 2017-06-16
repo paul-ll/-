@@ -1,4 +1,4 @@
-var douban = require('../../comm/script/fetch')
+var youyan = require('../../comm/script/fetch')
 var config = require('../../comm/script/config')
 var amapFile = require('../../dist/amap-wx.js')
 var app = getApp()
@@ -12,6 +12,9 @@ Page({
 	    distance:[],
 	    area_id:2,
 	    pcount:15,
+	    isFromSearch: true, 
+	    searchLoading: false, //"上拉加载"的变量，默认false，隐藏  
+    searchLoadingComplete: false , //“没有数据”的变量，默认false，隐藏
 	    site:1,
 	    lat:[],
 	    lon:[],
@@ -27,64 +30,78 @@ Page({
 		city:""
 
 	},
-	onLoad: function (options) {
-    // 生命周期函数--监听页面加载
-    var that = this
-    var orlat;
-    var orlon;
-   
-    wx.showNavigationBarLoading()
-    wx.hideNavigationBarLoading()
-		var myAmapFun = new amapFile.AMapWX({key:'b615b3f4ff1e35e90835dc07ad211c34'});
-		  myAmapFun.getRegeo({
-	      success: function(data){
-	      	console.log(data)
-	      	orlat = data[0].latitude;
-	      	orlon = data[0].longitude;
-	       that.setData({
-	       	city:data[0].regeocodeData.addressComponent.province,
-	       })
-
-	  //      wx.setNavigationBarTitle({
-			// 	title: '我的城市 - ' + that.citys..province
-			// })
-	      },
-	      fail: function(info){
-	        wx.showModal({title:info.errMsg})
-	      }
-	    })
-
-		
-		
-		
-
-  },
-  onReady: function () {
-    // 生命周期函数--监听页面初次渲染完成
-
-  },
-  onShow: function () {
-
-    // 生命周期函数--监听页面显示
-    var that = this;
-
-  	douban.getConcentration.call(that,config.apiList.getConcentration,that.data.area_id,that.data.p,that.data.pcount)
-		
-	douban.getCategory.call(that,config.apiList.getCategory,that.data.area_id)	
+onLoad: function (options) {
+// 生命周期函数--监听页面加载
+var that = this
+var orlat;
+var orlon;
+ wx.onNetworkStatusChange(function(res) {
+      console.log(res.isConnected)
+      console.log(res.networkType)
+    })
 
 
+wx.showNavigationBarLoading()
+wx.hideNavigationBarLoading()
+	var myAmapFun = new amapFile.AMapWX({key:'b615b3f4ff1e35e90835dc07ad211c34'});
+	  myAmapFun.getRegeo({
+      success: function(data){
+      	console.log(data)
+      	orlat = data[0].latitude;
+      	orlon = data[0].longitude;
+       that.setData({
+       	city:data[0].regeocodeData.addressComponent.province,
+       })
 
-  },
-  onHide: function () {
-    // 生命周期函数--监听页面隐藏
+  //      wx.setNavigationBarTitle({
+		// 	title: '我的城市 - ' + that.citys..province
+		// })
+      },
+      fail: function(info){
+        wx.navigateTo({
+          url: '../switchcity/switchcity?city=北京市'
+        })
+      }
+    })
 
-  },
-  onUnload: function () {
-    // 生命周期函数--监听页面卸载
+	
+	
+	
 
-  },
+},
+onReady: function () {
+// 生命周期函数--监听页面初次渲染完成
 
-	tabChange: function (e) {
+},
+onShow: function () {
+
+// 生命周期函数--监听页面显示
+var that = this;
+
+	youyan.getConcentration.call(that,config.apiList.getConcentration,that.data.area_id,that.data.p,that.data.pcount)
+	
+    youyan.getCategory.call(that,config.apiList.getCategory,that.data.area_id)	
+    wx.getSystemInfo( {
+      success: ( res ) => {
+        that.setData( {
+          windowHeight: res.windowHeight,
+          windowWidth: res.windowWidth
+        })
+      }
+    })
+
+
+},
+onHide: function () {
+// 生命周期函数--监听页面隐藏
+
+},
+onUnload: function () {
+// 生命周期函数--监听页面卸载
+
+},
+
+tabChange: function (e) {
 		console.log(e)
 	var that = this;
     var index = e.currentTarget.dataset.index;
@@ -96,9 +113,20 @@ Page({
     });
     that.onshow();
   },
-	onPullDownRefresh: function() {
+   pullDownRefresh: function( e ) {
+    this.onShow()
+  },
+pullUpLoad: function(e) {
 		var that = this
-		that.onShow()
+		if(!that.data.searchLoadingComplete){  
+	      that.setData({  
+	        p: that.data.p+1,  //每次触发上拉事件，把searchPageNum+1  
+	        isFromSearch: false,  //触发到上拉事件，把isFromSearch设为为false  
+	        searchLoading: true   //把"上拉加载"的变量设为false，显示 
+	      });  
+
+	     that.onShow();
+	    }   
 	},
 	viewSearch: function() {
 		
@@ -139,7 +167,13 @@ Page({
     viewBannerDetail:function(e){
     	 var data = e.currentTarget.dataset
     	wx.navigateTo({
-			url: '../eventInfo/eventInfo?event_id='+data.action_id
-		})
+  			url: '../eventInfo/eventInfo?event_id='+data.action_id
+  		})
+    },
+    eventAll:function(e){
+      var data = e.currentTarget.dataset
+      wx.navigateTo({
+        url: '../eventAll/eventAll?cid='+data.cid+'&area_id='+data.area_id+'&list='+JSON.stringify(data.list)
+      })
     }
 })

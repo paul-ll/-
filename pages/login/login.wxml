@@ -39,9 +39,7 @@
             <image class="look_word" src="../../../dist/images/no_look.png"></image>
           </view>
           <view class="row row_flex">
-            <input type="text" name="reg_code"
-            placeholder="验证码" />
-            
+            <input type="text" name="reg_code" placeholder="验证码" />
             <text class="{{selected?'miss_word':'hidden'}}" >{{second}}s后重新获取</text>
             <text class="{{selected1?'miss_word':'hidden'}}" bindtap="sendSmsCode">获取验证码</text>
           </view>
@@ -55,7 +53,8 @@
 </swiper>  
   <view class="fixed_wx" bindtap="loginByThird">
     <text class="wx_text">微信登录</text>
-    <image class="wx_img" src="../../../dist/images/wx2x.png"></image>
+    <view>登录</view>
+    <image class="wx_img" src="../../../dist/images/w_img.png"></image>
   </view>
 </view>
 

@@ -1,4 +1,4 @@
-var douban = require('../../comm/script/fetch')
+var youyan = require('../../comm/script/fetch')
 var util = require('../../util/util')
 var config = require('../../comm/script/config')
 Page({
@@ -46,7 +46,7 @@ Page({
         var address = options.address;
        
 
-		douban.getGamesTicket.call(that, config.apiList.getGamesTicket,event_id)
+		youyan.getGamesTicket.call(that, config.apiList.getGamesTicket,event_id)
 		
 		var games_id = wx.getStorageSync('games_id');
 		console.log(games_id)
@@ -58,7 +58,7 @@ Page({
 			start_date:date,
 			address:address
 		})
-		douban.getTicketByGames.call(that, config.apiList.getTicketByGames,event_id,games_id)
+		youyan.getTicketByGames.call(that, config.apiList.getTicketByGames,event_id,games_id)
 		
 
 
@@ -78,7 +78,7 @@ Page({
     });
 
     
-    douban.getTicketByGames.call(that, config.apiList.getTicketByGames,that.data.event_id,games_id)
+    youyan.getTicketByGames.call(that, config.apiList.getTicketByGames,that.data.event_id,games_id)
   	console.log(that.data.carts)
   	 that.sum();
   },
@@ -140,7 +140,7 @@ Page({
 	// timestamp2 = timestamp2 / 1000;
 
 	// console.log(stringTime + "的时间戳为：" + timestamp2);
-	//     douban.getGamesTicketByDate.call(that, config.apiList.getGamesTicketByDate,that.data.event_id,timestamp2)
+	//     youyan.getGamesTicketByDate.call(that, config.apiList.getGamesTicketByDate,that.data.event_id,timestamp2)
   },
   getDateList: function (y, mon) {
     var vm = this;
@@ -221,9 +221,9 @@ var timestamp2 = Date.parse(new Date(stringTime));
 timestamp2 = timestamp2 / 1000;
 
 console.log(stringTime + "的时间戳为：" + timestamp2);
-    douban.getGamesTicketByDate.call(vm, config.apiList.getGamesTicketByDate,event_id,timestamp2)
+    youyan.getGamesTicketByDate.call(vm, config.apiList.getGamesTicketByDate,event_id,timestamp2)
    var games_id=e.currentTarget.dataset.games_id
-  // douban.getTicketByGames.call(vm, config.apiList.getTicketByGames,event_id,games_id)
+  // youyan.getTicketByGames.call(vm, config.apiList.getTicketByGames,event_id,games_id)
    	vm.sum();
   },
   preMonth: function () {
@@ -441,6 +441,7 @@ console.log(stringTime + "的时间戳为：" + timestamp2);
 			page += parseFloat(carts[i]);
 		}
 		console.log(total)
+		total = total.toFixed(2);
 		// 写回经点击修改后的数组
 		that.setData({
 			page :page,

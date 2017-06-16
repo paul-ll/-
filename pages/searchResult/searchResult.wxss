@@ -71,16 +71,17 @@
     margin:0 10px 0 0;
 }
 .my_text {
-	height: 14px;
-	line-height: 14px;
-	margin-top:10px;
-}
-.my_text text{
+	width:90%;
+	height: 28rpx;
+	margin-top:20rpx;
+	overflow: hidden;
+	text-overflow:ellipsis;
+	white-space: nowrap;
     font-family: PingFangSC-Regular;
-    font-size: 14px;
+    font-size: 28rpx;
     color: #000000;
-    line-height: 14px;
-    font-weight:700;
+    line-height: 28rpx;
+    font-weight:600;
 }
 .my_time{
     font-family: PingFangSC-Regular;
@@ -96,14 +97,18 @@ width:100%;
 }
 .my_date{
 	font-family: PingFangSC-Regular;
-font-size: 12px;
-color: #888888;
-line-height: 12px;
-position:absolute;
-bottom:25px;
-left:0;
+	font-size: 12px;
+	color: #888888;
+	line-height: 12px;
+	position:absolute;
+	bottom:25px;
+	left:0;
 }
 .my_address{
+	width:90%;
+	overflow: hidden;
+	text-overflow:ellipsis;
+	white-space: nowrap;
     font-family: PingFangSC-Regular;
 	font-size: 12px;
 	color: #888888;

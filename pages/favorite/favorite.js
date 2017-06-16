@@ -1,4 +1,4 @@
-var douban = require('../../comm/script/fetch')
+var youyan = require('../../comm/script/fetch')
 var config = require('../../comm/script/config')
 var util = require('../../util/util')
 
@@ -14,8 +14,8 @@ Page({
   onLoad:function(options){
     var that = this
     var uid = options.uid;
-    douban.getUnusedTicketList.call(that,config.apiList.getUnusedTicketList,uid,that.data.p,that.data.pcount);
-    douban.getUsedTicketList.call(that,config.apiList.getUsedTicketList,uid,that.data.p,that.data.pcount);
+    youyan.getUnusedTicketList.call(that,config.apiList.getUnusedTicketList,uid,that.data.p,that.data.pcount);
+    youyan.getUsedTicketList.call(that,config.apiList.getUsedTicketList,uid,that.data.p,that.data.pcount);
     wx.stopPullDownRefresh()
   },
   viewgetTicketDetail: function(e) {

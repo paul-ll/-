@@ -93,6 +93,9 @@ page{background:#f7f7f7;}
    font:25rpx/50rpx "微软雅黑";
    width: 530rpx;
     color:#fff;
+    overflow: hidden;
+text-overflow:ellipsis;
+white-space: nowrap;
 }
 
 .fd-intro-txt {
@@ -541,17 +544,15 @@ padding-top:30rpx;
 
 
 .add-tick{
-    width:100%;
-  
+  padding-right:10px;
     padding-top:15rpx;
     background:#fff;
+    text-align:right;
 }
 .adult-price{
-    margin-left:490rpx;
     font:24rpx/46rpx "微软雅黑";
     margin-top:10rpx;
-    display:inline-block;
-    margin-right:10px;
+    
 }
 .family-price{
      margin-left:490rpx;
@@ -611,7 +612,7 @@ line-height: 32px;
 	padding:15px;
 }
 .goods_list{
-	padding:15px 0;
+	padding: 0 0 15px 0;
 }
 .add_price{
 display:flex;
@@ -685,4 +686,45 @@ display:inlie-block;
 }
 .check_flex{
 	display:flex;
+}
+
+.pay_mon {
+    box-sizing: border-box;
+    padding: 10rpx 30rpx;
+    padding-left: 60rpx;
+    font-size: 32rpx;
+    line-height:70rpx;
+   font-family: PingFangSC-Regular;
+   color: #FF5454;
+}
+
+
+
+.button{
+    text-align:center;
+    line-height:20px;
+    height:20px;
+    margin-top:10px;
+    color:#fff;
+    padding:2px 40px;
+    background: #0047FF;
+    box-shadow: 0 2px 4px 0 #4D7BFF;
+    border-radius: 2px;
+    font-family: PingFangSC-Regular;
+    font-size: 14px;
+    color: #FFFFFF;
+}
+.footer{
+    height:88rpx;
+     position:fixed;
+     display:flex;
+     justify-content:space-around;
+    bottom:0;
+    left:0;
+    width:100%;
+    z-index:99;
+    background: rgba(238,238,238,0.80);
+}
+.container{
+    padding-bottom:88rpx;
 }

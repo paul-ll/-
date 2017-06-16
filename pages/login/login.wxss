@@ -59,13 +59,11 @@ width:100%;
   position:fixed;
   bottom:40px;
   left:0;
+  z-index:9999;
 }
 .wx_img{
-  width:46px;
-  height:46px;
-  text-align:center;
-  margin-left:100px;
-  margin-top:22px;
+  width:80rpx;
+  height:80rpx;
 }
 .wx_text{
   display:block;

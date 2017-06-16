@@ -6,81 +6,86 @@ App({
     secret:'709afb38efa941486d47091d19afd9a0',//secret  
   
     },
-     onLaunch: function () {  
+    onLaunch: function() {
+      wx.getNetworkType({
+      success: function(res) {
+        // 返回网络类型, 有效值：
+        // wifi/2g/3g/4g/unknown(Android下不常见的网络类型)/none(无网络)
+        var networkType = res.networkType
+        console.log(networkType)
+      }
+    })
+   
+  },
+//      onLaunch: function () {  
     
+// var that = this;
+//      wx.clearStorageSync()
+//      var user=wx.getStorageSync('user') || {};    
+//      var userInfo=wx.getStorageSync('userInfo') || {};   
+//      var code;
+//      if((!user.openid || (user.expires_in || Date.now()) < (Date.now() + 600))&&(!userInfo.nickName)){   
+//         console.log(22)
+//         wx.login({    
+//         success: function(res){   
 
-  // wx.clearStorageSync()
-
-    //  console.log(11)
-    //  wx.clearStorageSync()
-    //  var user=wx.getStorageSync('user') || {};    
-    //  var userInfo=wx.getStorageSync('userInfo') || {};   
-    //  var code;
-    //  if((!user.openid || (user.expires_in || Date.now()) < (Date.now() + 600))&&(!userInfo.nickName)){   
-    //     console.log(22)
-    //     wx.login({    
-    //     success: function(res){   
-    //       console.log(res)
-    //       wx.setStorageSync('code', res.code);//存储code
-    //       code=res.code;
-    //         if(res.code) {  
-    //             wx.getUserInfo({  
-    //                 success: function (res) {  
-    //                     var objz={};  
-    //                     objz.avatarUrl=res.userInfo.avatarUrl;  
-    //                     objz.nickName=res.userInfo.nickName;  
-    //                     console.log(objz);  
-    //                     wx.setStorageSync('userInfo', objz);//存储userInfo  
-    //                 }  
-    //             });  
-    //             var d=that.globalData;//这里存储了appid、secret、token串    
-    //             var l='https://api.weixin.qq.com/sns/jscode2session?appid='+d.appid+'&secret='+d.secret+'&js_code='+res.code+'&grant_type=authorization_code';    
+//           console.log(res)
+//           wx.setStorageSync('code', res.code);//存储code
+//           code=res.code;
+//             if(res.code) {  
+//                 wx.getUserInfo({  
+//                     success: function (res) {  
+//                         var objz={};  
+//                         objz.avatarUrl=res.userInfo.avatarUrl;  
+//                         objz.nickName=res.userInfo.nickName;  
+//                         console.log(objz);  
+//                         wx.setStorageSync('userInfo', objz);//存储userInfo  
+//                     }  
+//                 });  
                 
-    //             // wx.request({    
-    //             //     url: l,    
-    //             //     data: {},    
-    //             //     method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT    
-    //             //     // header: {}, // 设置请求的 header    
-    //             //     success: function(res){  
-    //             //     console.log(res) 
-    //             //           var obj={};
-    //             //         obj.openid=res.data.openid;    
-    //             //         obj.expires_in=Date.now()+res.data.expires_in;    
-    //             //         console.log(obj);  
-    //             //         wx.setStorageSync('user', obj);//存储openid    
-    //             //     }    
-    //             // }); 
-    //             // // access_token
-    //             wx.request({    
-    //                 url: 'https://api.weixin.qq.com/sns/oauth2/access_token?appid='+d.appid+'&secret='+d.secret+'&code='+res.code+'&grant_type=authorization_code',    
-    //                 data: {},    
-    //                 method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT    
-    //                 // header: {}, // 设置请求的 header    
-    //                 success: function(res){  
-    //                 console.log(res) 
-    //                   var obj_token={};
+//                 var d=that.globalData;//这里存储了appid、secret、token串    
+//                 var l='https://api.weixin.qq.com/sns/jscode2session?appid='+d.appid+'&secret='+d.secret+'&js_code='+res.code+'&grant_type=authorization_code';    
+                
+//                 wx.request({    
+//                     url: l,    
+//                     data: {},    
+//                     method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT    
+//                     // header: {}, // 设置请求的 header    
+//                     success: function(res){  
+//                     console.log(res) 
+//                           var obj={};
+//                         obj.openid=res.data.openid;    
+//                         obj.expires_in=Date.now()+res.data.expires_in;    
+//                         console.log(obj);  
+//                         wx.setStorageSync('user', obj);//存储openid    
+//                     }    
+//                 }); 
+//                 // // access_token
+//                 // wx.request({    
+//                 //     url: 'https://api.weixin.qq.com/sns/oauth2/access_token?appid='+d.appid+'&secret='+d.secret+'&code='+res.code+'&grant_type=authorization_code',    
+//                 //     data: {},    
+//                 //     method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT    
+//                 //     // header: {}, // 设置请求的 header    
+//                 //     success: function(res){  
+//                 //     console.log(res) 
+//                 //       var obj_token={};
                           
-    //                     obj_token.openid=res.data.openid;    
-    //                     obj_token.access_token=res.data.access_token;
-    //                     console.log(obj_token);  
-    //                     wx.setStorageSync('obj_token', obj_token);//存储token    
-    //                 }    
-    //             }); 
+//                 //         obj_token.openid=res.data.openid;    
+//                 //         obj_token.access_token=res.data.access_token;
+//                 //         console.log(obj_token);  
+//                 //         wx.setStorageSync('obj_token', obj_token);//存储token    
+//                 //     }    
+//                 // }); 
 
                  
-    //         }else {  
-    //             console.log('获取用户登录态失败！' + res.errMsg)  
-    //         }            
-    //     }    
-    //   });   
-    // }   
-   },  
-  // onLaunch: function() {
-  //   // 获取用户信息
-  //   this.getUserInfo()
-  //   // //初始化缓存
-  //   this.initStorage()
-  // },
+//             }else {  
+//                 console.log('获取用户登录态失败！' + res.errMsg)  
+//             }            
+//         }    
+//       });   
+//     }   
+//    },  
+  
   // getUserInfo:function(cb){
   //   var that = this
   //   wx.login({

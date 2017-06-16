@@ -1,4 +1,4 @@
-var douban = require('../../comm/script/fetch')
+var youyan = require('../../comm/script/fetch')
 var config = require('../../comm/script/config')
 var util = require('../../util/util')
 var app = getApp();
@@ -19,16 +19,10 @@ Page({
 
 		var num = options.num;
 		
-		douban.orderDetail.call(that,config.apiList.orderDetail,order_id);
+		youyan.orderDetail.call(that,config.apiList.orderDetail,order_id);
 		that.setData({
 			num:num
-		})
-
-
-
-
-
-			
+		})		
 	},
 	onShow: function(e) {
 		
@@ -153,8 +147,14 @@ Page({
  fill_zero_prefix:function(num) {
 	return num < 10 ? "0" + num : num
 },
-checkboxChange: function(e) {
- console.log('checkbox发生change事件，携带value值为：', e.detail.value)
+pay_order: function(e) {
+	var that = this;
+	var data = e.currentTarget.dataset;
+	var order_num = data.order_num;
+	var pay_type = parseInt(data.pay_type);
+	console.log(order_num)
+	console.log(pay_type)
+ 	youyan.orderPay.call(that,config.apiList.orderPay,order_num,pay_type);
  }
 
 });

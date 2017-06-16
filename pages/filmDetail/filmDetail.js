@@ -1,4 +1,4 @@
-var douban = require('../../comm/script/fetch')
+var youyan = require('../../comm/script/fetch')
 var util = require('../../util/util')
 var config = require('../../comm/script/config')
 Page({
@@ -21,7 +21,7 @@ Page({
        		site_city:site,
        		active_id:id
        	})
-		douban.getActiveinfo.call(that, config.apiList.active_info, id, site,function(data){
+		youyan.getActiveinfo.call(that, config.apiList.active_info, id, site,function(data){
 			/// 判断是否收藏
 			wx.getStorage({
 			key: 'film_favorite',

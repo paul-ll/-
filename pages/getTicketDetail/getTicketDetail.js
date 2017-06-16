@@ -1,4 +1,4 @@
-var douban = require('../../comm/script/fetch');
+var youyan = require('../../comm/script/fetch');
 var config = require('../../comm/script/config');
 var util = require('../../util/util');
 Page({
@@ -10,7 +10,7 @@ Page({
     var that = this
     var ticket_id = options.ticket_id;
     console.log(ticket_id)
-    douban.getTicketDetail.call(that,config.apiList.getTicketDetail,ticket_id);
+    youyan.getTicketDetail.call(that,config.apiList.getTicketDetail,ticket_id);
    
   }
 })

@@ -1,5 +1,5 @@
 var message = require('../../component/message/message')
-var douban  = require('../../comm/script/fetch')
+var youyan  = require('../../comm/script/fetch')
 var config  = require('../../comm/script/config')
 Page({
   data:{
@@ -49,8 +49,8 @@ Page({
       
       wx.setStorageSync('searchData', searchData)
 
-      douban.Event.call(this,config.apiList.Event,keyword);
-     douban.User.call(this,config.apiList.User,keyword);
+      youyan.Event.call(this,config.apiList.Event,keyword);
+     youyan.User.call(this,config.apiList.User,keyword);
      
    
       wx.redirectTo({
@@ -66,8 +66,8 @@ Page({
       
       wx.setStorageSync('searchData', searchData)
     
-    douban.Event.call(that,config.apiList.Event,keyword);
-     douban.User.call(that,config.apiList.User,keyword);
+    youyan.Event.call(that,config.apiList.Event,keyword);
+     youyan.User.call(that,config.apiList.User,keyword);
       wx.redirectTo({
         url: "../searchResult/searchResult"
       })
@@ -76,8 +76,8 @@ Page({
     var that = this
     var keyword = e.currentTarget.dataset.keyword
 
-     douban.Event.call(that,config.apiList.Event,keyword);
-     douban.User.call(that,config.apiList.User,keyword);
+     youyan.Event.call(that,config.apiList.Event,keyword);
+     youyan.User.call(that,config.apiList.User,keyword);
    
       wx.redirectTo({
         url: "../searchResult/searchResult"

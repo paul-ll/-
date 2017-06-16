@@ -1,8 +1,8 @@
 
 
 
-.show{display:block;text-align:center;line-height:200rpx;}
-.hidden{display:none;text-align:center;line-height:200px;}
+.show{display:block;}
+.hidden{display:none;}
 
 .swiper-tab{  
     display:flex;
@@ -26,42 +26,84 @@
 
 
 .swiper_item{
-    height:101px;
     display:flex;
-    background: rgba(238,238,238,0.80);
+    background:#fff;
     margin-top:10px;
+    margin-left:10rpx;
+    margin-right:10rpx;
+}
+.item_right{
+width:100%;
+    position:relative;
+    overflow:hidden;
 }
 .my_img{
-    width:60px;
-    height:80px;
+    width:200rpx;
+    height:260rpx;
     display:block;
-    margin:0 10px 0 0;
+    margin:0 20rpx 0 0;
 }
-.my_text {
-	height: 14px;
-	line-height: 14px;
-	margin-top:10px;
-}
-.my_text text{
+
+.my_text{
+    width:100%;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+    display:inline-block;
+     margin-top:10rpx;
     font-family: PingFangSC-Regular;
-    font-size: 14px;
+    font-size: 28rpx;
     color: #000000;
-    line-height: 14px;
+    line-height: 32rpx;
     
+}
+.my_tag{
+    display:inline-block;
+    padding:0 10rpx;
+    height:40rpx;
+    text-align:center;
+    background: #EEEEEE;
+    margin-right:10rpx;
+    margin-top:10rpx;
+}
+.my_tag text{
+     font-family: PingFangSC-Regular;
+    font-size: 22rpx;
+    color: #000000;
+     line-height:40rpx;
+}
+.my_date{
+    margin-top:20rpx;
 }
 .my_time{
     font-family: PingFangSC-Regular;
-    font-size: 12px;
-    color: #888888;
-    line-height: 12px;
-    margin-top:10px;
+    font-size: 14px;
+    color: #FF5252;
+    line-height: 14px;
+    margin-top:20rpx;
 }
 .my_address{
+    width:100%;
+    position:absolute;
+    left:0;
+    bottom:0;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
     font-family: PingFangSC-Regular;
-    font-size: 12px;
+    font-size: 24rpx;
     color: #888888;
-    line-height: 12px;
-    margin-top:10px;
+    line-height: 32rpx;
+}
+.bottom_li{
+    border-bottom:1rpx solid #000;
+    color:#000;
+}
+.hidden{
+    display:none;
+}
+.complete{
+    text-align:center;
 }
 .feed_item{
 	    background: rgba(238,238,238,0.80);

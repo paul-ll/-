@@ -12,26 +12,44 @@
        
        	<view class="{{selected?'show':'hidden'}}">
            <block wx:for="{{collection.collect}}" wx:for-item="dataItem" wx:for-index="dataIndex" wx:key="data">
-            <view class="swiper_item">
-               <view><image class="my_img" src="{{dataItem.image}}"></image></view>
-               <view class="item_right">
-                    <view class="my_text"><text>{{dataItem.name}}</text></view>
-                    <view class="my_time">{{dataItem.ticket.current_price}}</view>
-                    <view class="my_date">{{dataItem.date_time}}</view>
-                    <view class="my_address">{{dataItem.arena_location}}</view>
-               </view>
-            </view>
+
+            <view class="swiper_item" data-event_id="{{dataItem.event_id}}" bindtap="enterEvent">
+           <view><image class="my_img" src="{{dataItem.image}}"></image></view>
+           <view class="item_right">
+                <view class="my_text">{{dataItem.name}}</view>
+                <view>
+                    <block wx:for="{{dataItem.tags}}" wx:for-item="tagItem" wx:for-index="dataIndex" wx:key="tag">
+                        <view class="my_tag" data-tag_id="{{tagItem.tag_id}}">
+                           <text> {{tagItem.name}}</text>
+                        </view>
+                    </block>
+                </view>
+                <view class="my_time">
+                <block wx:if="{{dataItem.ticket.end_ticket !=''}}">
+                ￥{{dataItem.ticket.start_ticket}}起
+                
+                </block>
+                <block wx:else>
+                ￥{{dataItem.ticket.current_price}}
+                </block>
+
+                </view>
+                <view class="my_date">{{dataItem.date_time}}</view>
+                <view class="my_address">{{dataItem.arena_location}}</view>
+           </view>
+        </view>
+            
            </block>
         
         </view>
 
           <!-- 我是呵呵 -->
         <view class="{{selected1?'show':'hidden'}}">
-            <block wx:for="{{collection.collect}}" wx:for-item="feedItem" wx:for-index="feedIndex" wx:key="feed">
+            <block wx:for="{{collection.collect}}" wx:for-item="feedItem" wx:for-index="feedIndex" wx:key="feedItemid">
             <view class="feed_item">
                <view class="feed_my_info">
                     <view>
-                         <image class="feed_img" src="{{feedItem.avatarUrl}}" />
+                        <image class="feed_img" src="{{feedItem.avatarUrl}}" />
                     </view>
                     <view>
                         <text class="feed_name">{{feedItem.uname}}</text>
@@ -40,7 +58,7 @@
                </view>
             
                <view class="feed_show_img">
-                    <block wx:for="{{feedItem.feed_image}}" wx:for-item="imageItem" wx:for-index="imageIndex">
+                    <block wx:for="{{feedItem.feed_image}}" wx:for-item="imageItem" wx:for-index="imageIndex" wx:key="imageItemid">
                         <image  class="feed_small_img" style="width:{{feedItem.feed_image.length==1? 250 : 125}}px;height:{{feedItem.feed_image.length==1? 250 : 125}}px" src="imageItem" />
                     </block>
                </view>

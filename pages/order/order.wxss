@@ -93,6 +93,9 @@ page{background:#f7f7f7;}
    font:25rpx/50rpx "微软雅黑";
    width: 530rpx;
     color:#fff;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
 }
 
 .fd-intro-txt {
@@ -549,7 +552,8 @@ padding-top:30rpx;
     background:#fff;
 }
 .adult-price{
-    margin-left:490rpx;
+    text-align:right;
+    margin-right:20rpx;
     font:24rpx/46rpx "微软雅黑";
     margin-top:10rpx;
 }
@@ -557,7 +561,9 @@ padding-top:30rpx;
      margin-left:490rpx;
      font:24rpx/46rpx "微软雅黑";
 }
-
+.favor_name{
+    padding-left:16px;
+}
 .delevey-mode{
     min-height:170rpx;
 
@@ -608,9 +614,7 @@ border-radius: 2px;
    font-family: PingFangSC-Regular;
    color: #FF5454;
 }
-.pay_mon text{
- margin-left:10px;
-}
+
 
 
 .button{
@@ -619,7 +623,7 @@ border-radius: 2px;
     height:20px;
     margin-top:10px;
     color:#fff;
-    padding:2px 60px;
+    padding:2px 40px;
     background: #0047FF;
     box-shadow: 0 2px 4px 0 #4D7BFF;
     border-radius: 2px;

@@ -1,4 +1,4 @@
-var douban = require('../../comm/script/fetch')
+var youyan = require('../../comm/script/fetch')
 var config = require('../../comm/script/config')
 var app = getApp()
 Page({
@@ -17,13 +17,13 @@ Page({
 	
 		var that = this
 		that.setData({
-			site:douban.site_map().site
+			site:youyan.site_map().site
 		})
 		
-		console.log(douban.site_map().site)
+		console.log(youyan.site_map().site)
 	
-		douban.search_list.call(that, config.apiList.search_list, that.data.site, that.data.page,that.data.pageLen,that.data.cate)
-		douban.getCateList.call(that,config.apiList.getCateList,that.data.site)
+		youyan.search_list.call(that, config.apiList.search_list, that.data.site, that.data.page,that.data.pageLen,that.data.cate)
+		youyan.getCateList.call(that,config.apiList.getCateList,that.data.site)
 		// 页面显示
     var span = wx.getSystemInfoSync().windowWidth / that.data.menus.length + 'px';
     that.setData({
@@ -37,15 +37,15 @@ Page({
 			hasMore: true,
 			showLoading: true,
 			start: 0,
-			site:douban.site_map().site
+			site:youyan.site_map().site
 		})
-		douban.search_list.call(that, config.apiList.search_list, that.data.site, that.data.page,that.data.pageLen,that.data.cate)
-		console.log(douban.site_map().site)
+		youyan.search_list.call(that, config.apiList.search_list, that.data.site, that.data.page,that.data.pageLen,that.data.cate)
+		console.log(youyan.site_map().site)
 	},
 	onReachBottom: function() {
 		var that = this
 		if (!that.data.showLoading) {
-			douban.fetchFilms.call(that, config.apiList.top, config.city, that.data.start, config.count)
+			youyan.fetchFilms.call(that, config.apiList.top, config.city, that.data.start, config.count)
 		}
 	},
 	viewFilmDetail: function(e) {

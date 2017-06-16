@@ -1,4 +1,4 @@
-var douban = require('../../comm/script/fetch')
+var youyan = require('../../comm/script/fetch')
 var config = require('../../comm/script/config')
 var util = require('../../util/util')
 
@@ -28,13 +28,13 @@ Page({
 		if (this.data.address_arr.id != null) {
 			
 			if(this.data.province_id != null){
-				douban.modifyAddress.call(this,config.apiList.modifyAddress,this.data.address_arr.id,this.data.address_arr.uid,realname,mobile,this.data.region_id,detail);
+				youyan.modifyAddress.call(this,config.apiList.modifyAddress,this.data.address_arr.id,this.data.address_arr.uid,realname,mobile,this.data.region_id,detail);
 			}
 			
 
 			
 		}else{
-			douban.addAddress.call(this,config.apiList.addAddress,this.data.address_arr.uid,realname,mobile,this.data.region_id,detail);
+			youyan.addAddress.call(this,config.apiList.addAddress,this.data.address_arr.uid,realname,mobile,this.data.region_id,detail);
 		}
 		// // if isDefault address
 		// address.set('isDefault', this.isDefault);
@@ -181,7 +181,7 @@ Page({
 	},
 	onShow: function () {
 		var that = this;
-	douban.getAreaList.call(that,config.apiList.getAreaList,that.data.version);
+	youyan.getAreaList.call(that,config.apiList.getAreaList,that.data.version);
 			
 	},
 	loadAddress: function (options) {

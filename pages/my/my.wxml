@@ -1,15 +1,17 @@
 <view class="container">
-     <view class="user-info" style="background-image: url({{skin}})">
-        <view class="user-skin" bindtap="viewSkin"></view>
-        <image src="{{myInfo_arr.avatar_url}}" class="user-avatar"></image>
-        <view class="user-nickname">
-            {{myInfo_arr.uname}}
-            <block wx:if="{{myInfo_arr.sex == 1}}">
-                <view class="user-sex-male"></view>
-            </block>
-            <block wx:elif="{{myInfo_arr.sex == 2}}">
-                <view class="user-sex-female"></view>
-            </block>
+     <view class="user-info">
+        <view class="user_box">
+            <view class="user_text">
+                <image src="{{myInfo_arr.avatar_url}}" class="user-avatar"></image>
+                <view>
+                    <view class="user_name">{{myInfo_arr.uname}}</view>
+                    <view class="user_at">
+                        <view class="user_follower">粉丝{{myInfo_arr.followers}}</view>|
+                        <view class="user_follow">关注{{myInfo_arr.follows}}</view>
+                    </view>
+                </view>
+            </view>
+            <view class="user_intro">{{myInfo_arr.intro}}</view>
         </view>
        <!-- <view class="user-location">{{userInfo.province}},{{userInfo.city}}</view> -->
     </view>
@@ -24,7 +26,7 @@
           <swiper-item>
           <view class="data_num">全部活动({{data_arr.length}})</view>
            <block wx:for="{{data_arr}}" wx:for-item="dataItem" wx:for-index="dataIndex" wx:key="data">
-            <view class="swiper_item">
+            <view class="swiper_item" bindtap="auterEvent" data-event_id="{{dataItem.event_id}}">
                <view><image class="my_img" src="http://artappnew.art.ifeng.com/uploadfiles/attach/2017/0321/15/58d0d5a4dafbe241fce9.png" /></view>
                <view>
                     <view class="my_text"><text>{{dataItem.event_name}}</text></view>
@@ -68,4 +70,8 @@
 
         </swiper>
     </view>
+    <block wx:if="{{uid == '' || uid != suid}}">
+      <view class="doFollow" data-value="{{follow}}" bindtap="doFollow">{{follow}}</view>
+    </block>
+   
 </view>

@@ -99,8 +99,22 @@ module.exports = {
         doRegister: base_url+'register/doRegister',
         // 第三方授权方式注册和登录
         loginByThird: base_url+'passport/loginByThird',
+        // 添加关注
+        doFollow: base_url+'follow/doFollow',
+        // 取消关注
+        unFollow: base_url+'follow/unFollow',
+        // 获取用户关注列表
+        getFollowingList: base_url+'follow/getFollowingList',
+        // 获取用户粉丝列表
+        getFollowerList: base_url+'follow/getFollowerList',
+        // 所属分类活动列表
+        getCategoryDetailList: base_url+'index/getCategoryDetailList',
 
-        
+
+
+
+
+
 
         search_list: base_url+'https://iyouyan.com.cn/appapi/v2/act/search',
         active_info: base_url+'https://iyouyan.com.cn/appapi/v2/act/detail '

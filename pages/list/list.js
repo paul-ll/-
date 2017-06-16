@@ -1,4 +1,4 @@
-var douban = require('../../comm/script/fetch')
+var youyan = require('../../comm/script/fetch')
 var config = require('../../comm/script/config')
 var util = require('../../util/util')
 var app = getApp();
@@ -28,7 +28,7 @@ Page({
 	onShow: function( e ) {
 		var that = this;
 		console.log(that.data.p)
-		douban.orderList.call(that,config.apiList.orderList,that.data.status,that.data.p,that.data.pcount);
+		youyan.orderList.call(that,config.apiList.orderList,that.data.status,that.data.p,that.data.pcount);
     wx.getSystemInfo( {
       success: ( res ) => {
         that.setData( {

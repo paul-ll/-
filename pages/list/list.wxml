@@ -17,7 +17,7 @@
 		</view>
 		<view class="carts-text">
 			<!-- 商品标题 -->
-			<text class="carts-title">{{item.event_name}}</text>
+			<view class="carts-title">{{item.event_name}}</view>
 			<view class="carts-subtitle">
 				<!-- 活动时间 -->
 				<text class="carts-price">{{item.date}}</text>

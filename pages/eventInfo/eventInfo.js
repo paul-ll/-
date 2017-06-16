@@ -1,4 +1,4 @@
-var douban = require('../../comm/script/fetch')
+var youyan = require('../../comm/script/fetch')
 var config = require('../../comm/script/config')
 var util = require('../../util/util')
 Page({
@@ -18,7 +18,7 @@ Page({
     var that = this
  
     var event_id= options.event_id;
-     douban.getEventDetail.call(that,config.apiList.getEventDetail,event_id);
+     youyan.getEventDetail.call(that,config.apiList.getEventDetail,event_id);
    
     
   },
@@ -53,13 +53,13 @@ Page({
           that.setData({
             collect:false
           })
-          douban.channelCollection.call(that,config.apiList.channelCollection,event_id,uid,that.data.type)
+          youyan.channelCollection.call(that,config.apiList.channelCollection,event_id,uid,that.data.type)
         
       }else{
         that.setData({
             collect:true
           })
-        douban.addCollection.call(that,config.apiList.addCollection,event_id,uid,that.data.type)
+        youyan.addCollection.call(that,config.apiList.addCollection,event_id,uid,that.data.type)
       }
   }
         
@@ -124,6 +124,13 @@ Page({
       url: "../eventInfo/eventInfo?event_id=" +event_id
     })
 
+  },
+  view_people:function(e){
+    var data = e.currentTarget.dataset;
+    var uid = data.uid
+    wx.redirectTo({
+      url: '../my/my?suid='+uid
+    })
   },
   bindCheckout : function(e){
      var uid = wx.getStorageSync('uid');

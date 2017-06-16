@@ -1,6 +1,5 @@
 .fd-hd {
     position: relative;
-    width:100%;
     display: flex;
     bachground:#fff;
     align-content: center;
@@ -53,6 +52,7 @@
 }
 
 .fd-intro {
+    position:relative;
     z-index: 2;
     width: 530rpx;
     margin-top: 15rpx;
@@ -62,17 +62,20 @@
 }
 
 .fd-title {
-  font-family: PingFangSC-Medium;
-font-size: 18px;
-color: #000000;
-line-height: 18px;
+    width:80%;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+    font-family: PingFangSC-Medium;
+    font-size: 18px;
+    color: #000000;
+    line-height: 18px;
 }
 
 .fd-intro-txt {
     margin-bottom: 18rpx;
     color: #eee;
 }
-
 .fd-data {
     display: flex;
     height: 150rpx;
@@ -210,7 +213,7 @@ border-radius: 2px;
 }
 .fd-address-add{
     position: absolute;
-    left:120px;
+    left:0;
     bottom: 10px;
     font-family: PingFangSC-Medium;
     font-size: 24px;
@@ -433,4 +436,17 @@ border-radius: 2px;
 }
 .hide{
     display:none!important;
+}
+.last_info_logo{
+    margin:2px 10px 0 15px;
+}
+.seller_logo{
+    width:100%;
+}
+.seller_logo{
+    width:40rpx;
+    height:40rpx;
+}
+.last_list_right{
+    display:flex;
 }

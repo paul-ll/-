@@ -14,17 +14,17 @@
 		    </block>
 		    <block wx:elif="{{eventInfo.ticket_interval.type == 2}}">
 		        <view class="fd-address-add">
-		            {{eventInfo.ticket_interval.start_ticket}}
+		            ￥{{eventInfo.ticket_interval.start_ticket}}
 		        </view>
 	        </block>
 	        <block wx:elif="{{eventInfo.ticket_interval.type == 3}}">
 		        <view class="fd-address-add">
-		           	{{eventInfo.ticket_interval.start_ticket}}~{{eventInfo.ticket_interval.end_ticket}}
+		           	￥{{eventInfo.ticket_interval.start_ticket}}~{{eventInfo.ticket_interval.end_ticket}}
 		        </view>
 	        </block>
 	        <block wx:elif="{{eventInfo.ticket_interval.type == 4}}">
 		        <view class="fd-address-add">
-		            {{eventInfo.ticket_interval.current_price}}
+		            ￥{{eventInfo.ticket_interval.current_price}}
 		        </view>
 	        </block>
 	     </view>
@@ -34,7 +34,7 @@
 		<view class="info_ul_list">
 			<view class="info_ul_li">
 				<view class="info_list_left">
-					<image class="info_list_span" src="../../../dist/images/time.png"></image>
+					<image class="info_list_span" src="../../dist/images/time.png"></image>
 				</view>
 				<view class="info_list_right">
 					<view>{{eventInfo.event.start_date}} {{eventInfo.event.week}} </view>
@@ -43,7 +43,7 @@
 			</view>
 			<view class="info_ul_li">
 				<view class="info_list_left">
-					<image class="info_list_span" src="../../../dist/images/location@3x.png"></image>
+					<image class="info_list_span" src="../../dist/images/location@3x.png"></image>
 				</view>
 				<view class="info_list_right">
 					<view class="info_list_p">{{eventInfo.event.arena_name}}</view>
@@ -51,12 +51,12 @@
 				</view>
 			</view>
 			<view class="info_ul_li">
-				<view class="info_list_left">
-					<image class="info_list_span" src="../../../dist/images/hold.png"></image>
+				<view class="info_list_left last_info_logo">
+					<image class="info_list_span" src="../../dist/images/hold.png"></image>
 				</view>
-				<view class="info_list_right">
-					<view class="info_list_name">单向空间</view><view class="info_list_last"></view>
-					<view>一句话商家介绍</view>
+				<view class="info_list_right last_list_right">
+					<view class="info_list_name">{{eventInfo.seller.realname}}</view><view class="info_list_last"><image class="seller_logo" src="{{eventInfo.seller.verified_icon}}"></image></view>
+
 
 				</view>
 			</view>
@@ -71,7 +71,7 @@
 		<scroll-view scroll-x="true" style=" white-space: nowrap; display: flex" >
 		<view class="info_people_list">
 			<block wx:for="{{eventInfo.collection.user}}" wx:for-item="eventPeople" wx:key="people" wx:for-index="index">
-				<image class="info_people_li" data-uid="{{eventPeople.uid}}" src="{{eventPeople.avatar}}"></image>
+				<image class="info_people_li" bindtap="view_people" data-uid="{{eventPeople.uid}}" src="{{eventPeople.avatar}}"></image>
 			</block>
 			<view class="info_people_list_span">...</view>
 		</view>

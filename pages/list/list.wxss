@@ -53,11 +53,15 @@ border-bottom: 1px solid #eee;
 
 /*右上部分标题*/
 .carts-title {
+width:95%;
 	font-size: 28rpx;
 	color: #000;
 	line-height: 38rpx;
-	font-weight:700;
-
+	font-weight:600;
+	overflow: hidden;
+text-overflow:ellipsis;
+white-space: nowrap;
+margin-top:10rpx;
 }
 
 /*右下部分价格与数量*/
