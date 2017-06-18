@@ -86,6 +86,7 @@ Page({
     that.setData( { currentTab: e.detail.current });  
   
   },  
+<<<<<<< HEAD
   // 粉丝列表
   myFlower:function(e){
      var that = this;
@@ -102,6 +103,8 @@ Page({
       url: "../flowingList/flowingList?suid="+data.suid
     })
   },
+=======
+>>>>>>> 5e89278067d978305d9af27434c683327b919f48
   // 关注
   doFollow:function(e){
     var that = this;

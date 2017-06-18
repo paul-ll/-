@@ -532,6 +532,7 @@ function loginByThird(url,platform,openid,access_token){
 
 
   // 获取用户关注列表
+<<<<<<< HEAD
   function getFollowingList(url,suid,p,pcount){
      var that = this
     var listName = [];
@@ -583,6 +584,12 @@ function loginByThird(url,platform,openid,access_token){
       }
     })
     }
+=======
+  // function getFollowingList(url,suid,p,pcount){
+    
+
+  // }
+>>>>>>> 5e89278067d978305d9af27434c683327b919f48
 
     // 获取活动场次和票种
      function getGamesTicket(url,event_id){
@@ -1567,9 +1574,12 @@ module.exports = {
   doFollow:doFollow,
   unFollow:unFollow,
   getCategoryDetailList:getCategoryDetailList,
+<<<<<<< HEAD
   getFollowingList:getFollowingList,
   getFollowerList:getFollowerList,
 
+=======
+>>>>>>> 5e89278067d978305d9af27434c683327b919f48
 
 
 

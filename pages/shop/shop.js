@@ -167,11 +167,16 @@ Page({
         bg:false
       });
 
+<<<<<<< HEAD
       
+=======
+
+>>>>>>> 5e89278067d978305d9af27434c683327b919f48
       if (week == 0) {
         weekIndex++;
         dateList[weekIndex] = [];
       }
+<<<<<<< HEAD
 
       
       for(var t=0;t<dateList[weekIndex].length;t++){
@@ -205,6 +210,32 @@ Page({
     //   }
 
   	},
+=======
+    }
+    // console.log('本月日期', dateList);
+      for(var j=0;j<dateList.length;j++){
+      	for(var k=0;k<dateList[j].length;k++){
+      		for(var r=0;r<date_option.length;r++){
+		      	if(date_option[r]==dateList[j][k].value){
+		      		vm.setData({
+				      dateList: dateList
+				    });
+		      		dateList[j][k].bg=true
+		      	}
+		      	vm.setData({
+			      dateList: dateList
+			    });
+		      }
+      	}
+      }
+    
+
+  
+
+
+    
+  },
+>>>>>>> 5e89278067d978305d9af27434c683327b919f48
   selectDate: function (e) {
 
   	

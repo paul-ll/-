@@ -6,8 +6,13 @@
                 <view>
                     <view class="user_name">{{myInfo_arr.uname}}</view>
                     <view class="user_at">
+<<<<<<< HEAD
                         <view class="user_follower" data-suid="{{myInfo_arr.uid}}" bindtap="myFlower">粉丝{{myInfo_arr.followers}}</view>|
                         <view class="user_follow" data-suid="{{myInfo_arr.uid}}" bindtap="myFlowing">关注{{myInfo_arr.follows}}</view>
+=======
+                        <view class="user_follower">粉丝{{myInfo_arr.followers}}</view>|
+                        <view class="user_follow">关注{{myInfo_arr.follows}}</view>
+>>>>>>> 5e89278067d978305d9af27434c683327b919f48
                     </view>
                 </view>
             </view>

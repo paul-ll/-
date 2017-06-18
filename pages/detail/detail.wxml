@@ -31,7 +31,11 @@
 
         </view>
           <view class="add-tick">
+<<<<<<< HEAD
             <block wx:for="{{goods.order.ticket_detail}}" wx:for-item="item" wx:for-index="index" wx:key="tickets">
+=======
+            <block wx:for="{{goods.order.ticket_detail}}" wx:for-item="item" wx:for-index="index">
+>>>>>>> 5e89278067d978305d9af27434c683327b919f48
             <block wx:if="{{item.num}}">
               <view class="adult-price ">
                   {{item.type}}：￥{{item.current_price}}
