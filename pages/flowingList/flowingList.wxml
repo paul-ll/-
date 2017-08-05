@@ -1,0 +1,12 @@
+<block wx:for="{{following}}" wx:for-item="userItem" wx:for-index="feedIndex" wx:key="feed">
+  <view class="user_flex" data-uid="{{userItem.fid}}" bindtap="user_info">
+    <image class="user_img" src="{{userItem.avatar_url}}" ></image>
+    <view class="user_info">
+        <view class="user_name">
+          <text class="user_text">{{userItem.uname}}</text>
+          <image class="user_icon" src="{{userItem.verified_icon}}"></image>
+        </view>
+        <view class="user_intro">{{userItem.intro}}</view>
+    </view>
+  </view>
+</block>
