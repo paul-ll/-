@@ -12,7 +12,7 @@ shakeSound: 摇一摇音效地址（带url表示远程地址）
 shakeWelcomeImg: 摇一摇欢迎图片
 */
 var url = 'http://139.196.214.241:8093';
-var base_url = 'https://hiyouyan.com/appapi/v3/'
+var base_url = 'https://XXXXXXXXXX/appapi/vX/'
 
 module.exports = {
     city: '',
